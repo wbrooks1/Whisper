@@ -27,8 +27,25 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Record"
+        android:onClick="RecordButton"
+        android:id="@+id/record_file_button"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Play"
+        android:onClick="PlayButton"
+        android:id="@+id/play_file_button"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="@string/save_text"
         android:onClick="saveFile"
         android:id="@+id/save_file_button" />
+
 </android.support.design.widget.CoordinatorLayout>
