@@ -1,9 +1,11 @@
 package tcss450.uw.edu.whisper;
 
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import tcss450.uw.edu.whisper.FileFragment.OnListFragmentInteractionListener;
@@ -58,6 +60,7 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public final ImageView mThumbnailView;
         public final TextView mIdView;
         public final TextView mContentView;
         public AudioFile mItem;
@@ -65,6 +68,7 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            mThumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
         }

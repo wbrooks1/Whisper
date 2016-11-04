@@ -40,6 +40,8 @@ public class FileFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    public final static String FILE_ITEM_SELECTED = "file_selected";
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the

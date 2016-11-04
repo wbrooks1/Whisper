@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Whisper</string>
     <string name="save_text">Save</string>
-
+    <string name="record_text">Start Recording</string>
 </resources>

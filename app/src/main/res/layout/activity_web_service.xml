@@ -24,11 +24,14 @@
 
     <include layout="@layout/content_file" />
 
+    
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="@string/save_text"
-        android:onClick="saveFile"
-        android:id="@+id/save_file_button" />
+        android:layout_gravity="left"
+        android:text="@string/record_text"
+        android:onClick="toRecordActivity"
+        android:id="@+id/to_record_button" />
+
+
 </android.support.design.widget.CoordinatorLayout>

@@ -1,8 +1,10 @@
 package tcss450.uw.edu.whisper;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import tcss450.uw.edu.whisper.file.AudioFile;
@@ -27,6 +29,22 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
 
     @Override
     public void onListFragmentInteraction(AudioFile item) {
+        Log.i("CA onListFragment", item.toString());
+        ListenFragment listenFragment = new ListenFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(FileFragment.FILE_ITEM_SELECTED, item);
+        listenFragment.setArguments(args);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, listenFragment)
+                .addToBackStack(null)
+                .commit();
     }
+
+    public void toRecordActivity(View view) {
+        Intent intent = new Intent(this, AudioAcivity.class);
+        startActivity(intent);
+    }
+
+
 }
