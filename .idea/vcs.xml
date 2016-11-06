@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<<<<<<< HEAD
+=======
+    <mapping directory="$PROJECT_DIR$/Whisper" vcs="Git" />
+>>>>>>> a8d7778e028d4b37ffb06699d5741792d6ec80fc
   </component>
 </project>

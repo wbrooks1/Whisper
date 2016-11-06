@@ -3,9 +3,12 @@
     package="tcss450.uw.edu.whisper">
 
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+=======
+>>>>>>> a8d7778e028d4b37ffb06699d5741792d6ec80fc
 
     <application
         android:allowBackup="true"
