@@ -2,4 +2,22 @@
     <string name="app_name">Whisper</string>
     <string name="save_text">Save</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- login strings -->
+    <string name="userid_hint">Enter your user ID</string>
+    <string name="pwd_hint">Enter your password</string>
+    <string name="login_text">Login</string>
+    <string name="register">Register</string>
+    <string name="reenter_password">Re-enter your password</string>
+    <string name="register_text">Register</string>
+
+    <string name="LOGIN_PREFS">edu.uw.whisper.PREFS</string>
+    <string name="LOGGEDIN">loggedin</string>
+
+
+
+
 </resources>
