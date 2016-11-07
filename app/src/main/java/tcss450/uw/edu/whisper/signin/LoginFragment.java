@@ -78,6 +78,7 @@ public class LoginFragment extends Fragment {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragment_container, f);
+                ft.addToBackStack(null);
                 ft.commit();
 
             }

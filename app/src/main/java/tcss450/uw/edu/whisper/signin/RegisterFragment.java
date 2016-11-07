@@ -1,6 +1,7 @@
 package tcss450.uw.edu.whisper.signin;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.net.URLEncoder;
 
 import tcss450.uw.edu.whisper.R;
 
@@ -27,7 +30,7 @@ public class RegisterFragment extends Fragment {
     private EditText userIdText;
     private EditText pwdText;
 
-    private RegisterFragment mListerner;
+    private AddUserListener mListener;
 
 
     public RegisterFragment() {
@@ -86,6 +89,7 @@ public class RegisterFragment extends Fragment {
                             , Toast.LENGTH_SHORT).show();
                     pwdText.requestFocus();
                     confirmationPwd.setText("");
+                    pwdText.setText("");
                     return;
                 }
                 if(pwd.contentEquals(confirmPwd)) {
@@ -95,6 +99,7 @@ public class RegisterFragment extends Fragment {
 
                     // TODO: 11/5/2016  add users into the database
                     String url = buildRegisterURL(v);
+                    mListener.addUser(url);
 
 
 
@@ -102,6 +107,7 @@ public class RegisterFragment extends Fragment {
                     FragmentManager fm = getActivity().getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
                     ft.replace(R.id.fragment_container, f);
+
                     ft.commit();
 
                     return;
@@ -124,18 +130,32 @@ public class RegisterFragment extends Fragment {
         public void addUser(String url);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof AddUserListener) {
+            mListener = (AddUserListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement AddUserListener");
+        }
+    }
+
+
     private String buildRegisterURL(View v) {
 
         StringBuilder sb = new StringBuilder(USER_ADD_URL);
 
         try {
             String userName = userIdText.getText().toString();
-            sb.append("user_name=");
+            sb.append("email=");
+
             sb.append(userName);
 
             String password = pwdText.getText().toString();
-            sb.append("password");
-            sb.append(password);
+            sb.append("&pwd=");
+            sb.append(URLEncoder.encode(password, "UTF-8"));
+            //sb.append(password);
 
             Log.i("RegisterFragment", sb.toString());
         } catch (Exception e) {
