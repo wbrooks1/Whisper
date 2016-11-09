@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Serializable object for file saving and referencing.
+ */
 public class AudioFile implements Serializable {
 
     private String mFileName;
@@ -31,6 +34,12 @@ public class AudioFile implements Serializable {
         this.mContent = mContent;
     }
 
+    /**
+     * Parse incoming JSON from web service.
+     * @param fileJSON
+     * @param audioFileList
+     * @return exception handling
+     */
     public static String parseFileJSON(String fileJSON, List<AudioFile> audioFileList) {
         String reason = null;
         if (fileJSON != null) {
