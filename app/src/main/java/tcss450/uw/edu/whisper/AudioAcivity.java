@@ -22,7 +22,9 @@ public class AudioAcivity extends AppCompatActivity {
     private static String mFileName = null;
 
     private RecordButton mRecordButton = null;
+    private PlayButton mPlayButton = null;
     private MediaRecorder mRecorder = null;
+    private MediaPlayer mPlayer;
 
 
     private void onRecord(boolean start) {
@@ -77,6 +79,51 @@ public class AudioAcivity extends AppCompatActivity {
             setOnClickListener(clicker);
         }
     }
+    class PlayButton extends Button{
+        boolean mStartPlaying = true;
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    setText("Stop playing");
+                } else {
+                    setText("Start playing");
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        };
+        public PlayButton(Context ctx){
+            super(ctx);
+            setText("Preview Audio");
+            setOnClickListener(clicker);
+
+        }
+    }
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void startPlaying() {
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(mFileName);
+            Log.e(LOG_TAG, mFileName);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "prepare() failed");
+        }
+    }
+
+    private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
+    }
 
     public AudioAcivity() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -94,6 +141,12 @@ public class AudioAcivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        mPlayButton = new PlayButton(this);
+        ll.addView(mPlayButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         setContentView(ll);
     }
 
@@ -104,5 +157,8 @@ public class AudioAcivity extends AppCompatActivity {
             mRecorder.release();
             mRecorder = null;
         }
+    }
+    public String getmFileName(){
+        return mFileName;
     }
 }
