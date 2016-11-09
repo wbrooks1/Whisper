@@ -18,11 +18,11 @@ import java.io.IOException;
 
     /**
      * @author William Almond
-     * @author Winfield Brooks
+     * Modified by Winfield Brooks
      * Class controls recording and playing audio.
      * Code largly similar to Android APK example.
      */
-    public class AudioAcivity extends AppCompatActivity {
+    public class AudioActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static String mFileName = null;
@@ -168,7 +168,7 @@ import java.io.IOException;
         /**
          * Constructor for the AudioActivity class.
          */
-    public AudioAcivity() {
+    public AudioActivity() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
     }

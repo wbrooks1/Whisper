@@ -1,11 +1,6 @@
 package tcss450.uw.edu.whisper;
 
 import android.content.Intent;
-import android.content.Context;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-
-import android.content.Intent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,7 +43,7 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
     }
 
     public void toRecordActivity(View view) {
-        Intent intent = new Intent(this, AudioAcivity.class);
+        Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
     }
 }
