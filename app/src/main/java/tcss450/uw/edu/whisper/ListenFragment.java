@@ -119,6 +119,8 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
         mMediaPlayer.pause();
+        mMediaPlayer.release();
+        mMediaPlayer = null;
     }
 
 
