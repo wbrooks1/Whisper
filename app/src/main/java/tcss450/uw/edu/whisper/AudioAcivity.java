@@ -1,5 +1,6 @@
     package tcss450.uw.edu.whisper;
 
+import android.media.audiofx.Visualizer;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ public class AudioAcivity extends AppCompatActivity {
     private PlayButton mPlayButton = null;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer;
+    private VisualizerView mVisualizer;
 
 
     private void onRecord(boolean start) {
@@ -115,6 +117,7 @@ public class AudioAcivity extends AppCompatActivity {
             Log.e(LOG_TAG, mFileName);
             mPlayer.prepare();
             mPlayer.start();
+            audioVisualizerSetup();
         } catch (IOException e) {
             Log.e(LOG_TAG, "prepare() failed");
         }
@@ -128,6 +131,15 @@ public class AudioAcivity extends AppCompatActivity {
     public AudioAcivity() {
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFileName += "/audiorecordtest.3gp";
+    }
+
+    /**
+     * Audio Visualizer links to the VisualizerView Class
+     */
+    public void audioVisualizerSetup(){
+        mVisualizer = new VisualizerView(this);
+        mVisualizer.link(mPlayer);
+        setContentView(mVisualizer);
     }
 
     @Override
