@@ -20,6 +20,7 @@ import tcss450.uw.edu.whisper.file.AudioFile;
 
 
 /**
+ * @author Winfield Brooks
  * Fragment to play back selected audio file from the list of previously saved audio files.
  */
 public class ListenFragment extends Fragment implements View.OnClickListener {

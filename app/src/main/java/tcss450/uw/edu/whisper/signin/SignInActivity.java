@@ -21,6 +21,10 @@ import java.net.URL;
 import tcss450.uw.edu.whisper.R;
 import tcss450.uw.edu.whisper.WebServiceActivity;
 
+/**
+ * @author Jacob Tillet
+ * Class controls the sign in to the application.
+ */
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,  RegisterFragment.AddUserListener, LoginFragment.loginListener {
 
     /** helps allow app to remember who was loggin in */

@@ -24,6 +24,7 @@ import java.util.List;
 import tcss450.uw.edu.whisper.file.AudioFile;
 
 /**
+ * @author Winfield Brooks
  * List fragment containing all previously saved audio files.
  */
 public class FileFragment extends Fragment {

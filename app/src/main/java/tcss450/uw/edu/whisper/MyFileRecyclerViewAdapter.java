@@ -23,11 +23,22 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
     private final List<AudioFile> mValues;
     private final OnListFragmentInteractionListener mListener;
 
+    /**
+     * Class constructor.
+     * @param items a list of audio files.
+     * @param listener the list fragment listener.
+     */
     public MyFileRecyclerViewAdapter(List<AudioFile> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
 
+    /**
+     * Class creates the ViewHolder object by inflating the view.
+     * @param parent ViewGroup
+     * @param viewType integer.
+     * @return ViewHolder object
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -35,6 +46,11 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
         return new ViewHolder(view);
     }
 
+    /**
+     * Binds the ViewHolder to a listener and creates text in it.
+     * @param holder ViewHolder
+     * @param position integer
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
@@ -53,11 +69,19 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
         });
     }
 
+    /**
+     * Getter for the number of values.
+     * @return integer
+     */
     @Override
     public int getItemCount() {
         return mValues.size();
     }
 
+    /**
+     * @author Winfield Brooks
+     * Class that creates the instance of ViewHolder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView mThumbnailView;
@@ -73,6 +97,11 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
+        /**
+         * Method to display the string representation of the content specified plus
+         * content text single in quotes.
+         * @return String
+         */
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

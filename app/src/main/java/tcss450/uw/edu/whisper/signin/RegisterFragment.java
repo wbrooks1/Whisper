@@ -20,6 +20,7 @@ import java.net.URLEncoder;
 import tcss450.uw.edu.whisper.R;
 
 /**
+ * @author Jacob Tillet
  * A simple {@link Fragment} subclass.
  */
 public class RegisterFragment extends Fragment {

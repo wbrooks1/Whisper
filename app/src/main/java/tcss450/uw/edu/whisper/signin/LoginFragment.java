@@ -27,6 +27,7 @@ import java.util.List;
 import tcss450.uw.edu.whisper.R;
 
 /**
+ * @author Jacob Tillet
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment {
