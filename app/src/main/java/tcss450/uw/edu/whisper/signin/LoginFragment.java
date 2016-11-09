@@ -1,12 +1,14 @@
 package tcss450.uw.edu.whisper.signin;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URLEncoder;
+import java.util.List;
+
 import tcss450.uw.edu.whisper.R;
 
 /**
@@ -22,18 +31,34 @@ import tcss450.uw.edu.whisper.R;
  */
 public class LoginFragment extends Fragment {
 
+    private final static String LOGIN_URL
+            = "http://cssgate.insttech.washington.edu/~tillettj/Android/userInfo.php?";
 
+    public EditText userIdText;
+
+    public loginListener mListener;
+
+    /**
+     * empty constructor
+     */
     public LoginFragment() {
         // Required empty public constructor
     }
 
 
+    /**
+     * creates what is in the fragment
+     * @param inflater makes the view visable
+     * @param container the thig that is being inflated
+     * @param savedInstanceState
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        final EditText userIdText = (EditText) v.findViewById(R.id.userid_edit);
+        userIdText = (EditText) v.findViewById(R.id.userid_edit);
         final EditText pwdText = (EditText) v.findViewById(R.id.pwd_edit);
         TextView register = (TextView) v.findViewById(R.id.new_user);
         Button signInButton = (Button) v.findViewById(R.id.login_button);
@@ -88,9 +113,75 @@ public class LoginFragment extends Fragment {
         return v;
     }
 
+    public static String parseCourseJSON(String courseJSON, List<String> userInfo) {
+        String reason = null;
+        if (courseJSON != null) {
+            try {
+                JSONArray arr = new JSONArray(courseJSON);
 
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    userInfo.add(obj.getString("email"));
+                    userInfo.add(obj.getString("pwd"));
+                }
+            } catch (JSONException e) {
+                reason =  "Unable to parse data, Reason: " + e.getMessage();
+
+            }
+
+        }
+        return reason;
+    }
+
+
+    /**
+     * interface for the login method
+     */
     public interface LoginInteractionListener {
         public void login(String userId, String pwd);
+    }
+
+    public interface loginListener {
+        public void loginListener(String url);
+
+    }
+
+    /**
+     * instanciates mListener
+     * @param context the current state of the app
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof RegisterFragment.AddUserListener) {
+            mListener = (LoginFragment.loginListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement AddUserListener");
+        }
+    }
+
+    private String buildRegisterURL(View v) {
+
+        StringBuilder sb = new StringBuilder(LOGIN_URL);
+
+        try {
+            String userName = userIdText.getText().toString();
+            sb.append("email=");
+
+            sb.append(userName);
+
+            sb.append("&cmd=email");
+
+
+
+            Log.i("RegisterFragment", sb.toString());
+        } catch (Exception e) {
+            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+
+        return sb.toString();
     }
 
 

@@ -24,20 +24,34 @@ import tcss450.uw.edu.whisper.R;
  */
 public class RegisterFragment extends Fragment {
 
+    /** the url to acces the registerUser php file */
     private final static String USER_ADD_URL
             = "http://cssgate.insttech.washington.edu/~tillettj/Android/registerUser.php?";
 
+    /** the edit text widget for the user id */
     private EditText userIdText;
+    /** the edit text widget for the password */
     private EditText pwdText;
 
+    /** the add user listener */
     private AddUserListener mListener;
 
 
+    /**
+     * empty constructor
+     */
     public RegisterFragment() {
         // Required empty public constructor
     }
 
 
+    /**
+     * creates the register fragment
+     * @param inflater makes the container visable
+     * @param container what holds the widgets
+     * @param savedInstanceState
+     * @return the view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,9 +111,11 @@ public class RegisterFragment extends Fragment {
                             , Toast.LENGTH_SHORT).show();
 
 
-                    // TODO: 11/5/2016  add users into the database
+
                     String url = buildRegisterURL(v);
                     mListener.addUser(url);
+
+
 
 
 
@@ -126,10 +142,18 @@ public class RegisterFragment extends Fragment {
 
     }
 
+    /**
+     * an interface for the adduser method
+     */
     public interface AddUserListener {
         public void addUser(String url);
+
     }
 
+    /**
+     * instanciates mListener
+     * @param context the current state of the app
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -142,6 +166,11 @@ public class RegisterFragment extends Fragment {
     }
 
 
+    /**
+     * builds the url to register users
+     * @param v the view
+     * @return the url
+     */
     private String buildRegisterURL(View v) {
 
         StringBuilder sb = new StringBuilder(USER_ADD_URL);
