@@ -1,7 +1,7 @@
 package tcss450.uw.edu.whisper.file;
 
 /**
- * Created by winb on 10/27/16.
+ * Created by Winfield Brooks on 10/27/16.
  */
 
 import android.util.Log;

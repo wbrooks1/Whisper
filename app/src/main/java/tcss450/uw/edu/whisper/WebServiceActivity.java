@@ -15,8 +15,19 @@ import android.view.View;
 import tcss450.uw.edu.whisper.file.AudioFile;
 import tcss450.uw.edu.whisper.signin.SignInActivity;
 
+
+/**
+ * Activity used as base for all fragments using the web service.  Used to retrieve the audio files
+ * and to store login and registration data.
+ * @author Winfield Brooks
+ * @author Jacob Tillet
+ */
 public class WebServiceActivity extends AppCompatActivity implements FileFragment.OnListFragmentInteractionListener {
 
+    /**
+     * Set up connection to File Fragment and web service activity layout.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +44,10 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
 
     }
 
+    /**
+     * Opens Listen Fragment for selected file.
+     * @param item
+     */
     @Override
     public void onListFragmentInteraction(AudioFile item) {
         Log.i("CA onListFragment", item.toString());
@@ -47,6 +62,10 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
                 .commit();
     }
 
+    /**
+     * Route to recording activity view.
+     * @param view
+     */
     public void toRecordActivity(View view) {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);

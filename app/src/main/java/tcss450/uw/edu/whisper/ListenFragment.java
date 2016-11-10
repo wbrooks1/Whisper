@@ -68,7 +68,7 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
 
 
         } catch (IOException e) {
-            Toast.makeText(getContext(), "mp3 not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "file not found", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -81,7 +81,7 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onPrepared(MediaPlayer player) {
                 int duration = player.getDuration();
-                String durationString = String.format("%d:%d",
+                String durationString = String.format("%d:%02d",
                         TimeUnit.MILLISECONDS.toMinutes(duration),
                         TimeUnit.MILLISECONDS.toSeconds(duration) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
