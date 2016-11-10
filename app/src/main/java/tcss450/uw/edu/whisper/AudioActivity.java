@@ -1,5 +1,6 @@
     package tcss450.uw.edu.whisper;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.widget.LinearLayout;
@@ -84,8 +85,10 @@ import java.io.IOException;
                 onRecord(mStartRecording);
                 if (mStartRecording) {
                     setText("Stop recording");
+                    mRecordButton.setBackgroundColor(Color.RED);
                 } else {
                     setText("Start recording");
+                    mRecordButton.setBackgroundColor(Color.BLUE);
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -113,8 +116,10 @@ import java.io.IOException;
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
                     setText("Stop playing");
+                    mRecordButton.setBackgroundColor(Color.RED);
                 } else {
                     setText("Start playing");
+                    mRecordButton.setBackgroundColor(Color.GREEN);
                 }
                 mStartPlaying = !mStartPlaying;
             }
@@ -183,12 +188,14 @@ import java.io.IOException;
 
         LinearLayout ll = new LinearLayout(this);
         mRecordButton = new RecordButton(this);
+        mRecordButton.setBackgroundColor(Color.BLUE);
         ll.addView(mRecordButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         mPlayButton = new PlayButton(this);
+        mPlayButton.setBackgroundColor(Color.GREEN);
         ll.addView(mPlayButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
