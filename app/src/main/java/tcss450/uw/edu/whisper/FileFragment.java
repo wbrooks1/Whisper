@@ -33,9 +33,7 @@ public class FileFragment extends Fragment {
             = "http://cssgate.insttech.washington.edu/~_450team4/fileList.php?cmd=files";
     private RecyclerView mRecyclerView;
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     public final static String FILE_ITEM_SELECTED = "file_selected";

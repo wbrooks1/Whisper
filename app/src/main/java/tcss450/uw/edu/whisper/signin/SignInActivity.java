@@ -22,7 +22,7 @@ import tcss450.uw.edu.whisper.R;
 import tcss450.uw.edu.whisper.WebServiceActivity;
 
 /**
- * @author Jacob Tillet
+ * @author Jacob Tillett
  * Class controls the sign in to the application.
  */
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,  RegisterFragment.AddUserListener, LoginFragment.loginListener {
@@ -93,7 +93,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
 
     /**
-     * async task for useing web services
+     * async task for useing web services for registering
      */
     private class AddUserTask extends AsyncTask<String, Void, String> {
 
@@ -170,6 +170,9 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         }
     }
 
+    /**
+     * async tast for loging the user
+     */
     private class LoginTask extends AsyncTask<String, Void, String> {
 
 

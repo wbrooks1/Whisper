@@ -27,16 +27,18 @@ import java.util.List;
 import tcss450.uw.edu.whisper.R;
 
 /**
- * @author Jacob Tillet
+ * @author Jacob Tillett
  * A simple {@link Fragment} subclass.
+ * a fragment for logging in the user
  */
 public class LoginFragment extends Fragment {
 
+    /** url to get user info */
     private final static String LOGIN_URL
             = "http://cssgate.insttech.washington.edu/~tillettj/Android/userInfo.php?";
-
+    /** the widget that has the user id */
     public EditText userIdText;
-
+    /** the listener for logging in */
     public loginListener mListener;
 
     /**
@@ -110,15 +112,22 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        //check if a registered user
+
         return v;
     }
 
-    public static String parseCourseJSON(String courseJSON, List<String> userInfo) {
+
+    /**
+     * parses the user info Json
+     * @param userJSON the json that has the user info
+     * @param userInfo an arraylist that holds the user info
+     * @return reason for error
+     */
+    public static String parseUserJSON(String userJSON, List<String> userInfo) {
         String reason = null;
-        if (courseJSON != null) {
+        if (userJSON != null) {
             try {
-                JSONArray arr = new JSONArray(courseJSON);
+                JSONArray arr = new JSONArray(userJSON);
 
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
@@ -142,6 +151,9 @@ public class LoginFragment extends Fragment {
         public void login(String userId, String pwd);
     }
 
+    /**
+     * iinterface for the lofing listener
+     */
     public interface loginListener {
         public void loginListener(String url);
 
@@ -162,7 +174,12 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    private String buildRegisterURL(View v) {
+    /**
+     * builds the url to get user info
+     * @param v the view
+     * @return the url
+     */
+    private String buildRUserrURL(View v) {
 
         StringBuilder sb = new StringBuilder(LOGIN_URL);
 
