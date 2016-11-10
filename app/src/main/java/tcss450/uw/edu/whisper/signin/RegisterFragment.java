@@ -20,8 +20,9 @@ import java.net.URLEncoder;
 import tcss450.uw.edu.whisper.R;
 
 /**
- * @author Jacob Tillet
+ * @author Jacob Tillett
  * A simple {@link Fragment} subclass.
+ * fragment for registering the user
  */
 public class RegisterFragment extends Fragment {
 
