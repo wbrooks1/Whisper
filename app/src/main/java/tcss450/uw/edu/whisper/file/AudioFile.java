@@ -21,7 +21,6 @@ public class AudioFile implements Serializable {
 
     private String mFileName;
     private String mDesc;
-    //TODO: make content file class
     private String mContent;
 
     public static final String FILE_NAME = "fileName";
