@@ -1,7 +1,7 @@
 package tcss450.uw.edu.whisper.file;
 
 /**
- * Created by winb on 10/27/16.
+ * Created by Winfield Brooks on 10/27/16.
  */
 
 import android.util.Log;
@@ -14,11 +14,13 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Serializable object for file saving and referencing.
+ */
 public class AudioFile implements Serializable {
 
     private String mFileName;
     private String mDesc;
-    //TODO: make content file class
     private String mContent;
 
     public static final String FILE_NAME = "fileName";
@@ -31,6 +33,12 @@ public class AudioFile implements Serializable {
         this.mContent = mContent;
     }
 
+    /**
+     * Parse incoming JSON from web service.
+     * @param fileJSON
+     * @param audioFileList
+     * @return exception handling
+     */
     public static String parseFileJSON(String fileJSON, List<AudioFile> audioFileList) {
         String reason = null;
         if (fileJSON != null) {

@@ -24,10 +24,8 @@ import java.util.List;
 import tcss450.uw.edu.whisper.file.AudioFile;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
+ * @author Winfield Brooks
+ * List fragment containing all previously saved audio files.
  */
 public class FileFragment extends Fragment {
 
@@ -35,9 +33,7 @@ public class FileFragment extends Fragment {
             = "http://cssgate.insttech.washington.edu/~_450team4/fileList.php?cmd=files";
     private RecyclerView mRecyclerView;
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     public final static String FILE_ITEM_SELECTED = "file_selected";
@@ -50,7 +46,6 @@ public class FileFragment extends Fragment {
     public FileFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static FileFragment newInstance(int columnCount) {
         FileFragment fragment = new FileFragment();
@@ -108,20 +103,15 @@ public class FileFragment extends Fragment {
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * List item interaction interface implemented by WebServiceActivity.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(AudioFile item);
     }
 
+    /**
+     * Async Task to download AudioFiles from web service.
+     */
     private class DownloadCoursesTask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -142,7 +132,7 @@ public class FileFragment extends Fragment {
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to download the list of courses, Reason: "
+                    response = "Unable to download the list of files, Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -152,6 +142,10 @@ public class FileFragment extends Fragment {
             return response;
         }
 
+        /**
+         * Create List from retrieved AudioFiles for display.
+         * @param result
+         */
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
             if (result.startsWith("Unable to")) {

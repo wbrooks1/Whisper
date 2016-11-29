@@ -20,7 +20,8 @@ import tcss450.uw.edu.whisper.file.AudioFile;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * @author Winfield Brooks
+ * Fragment to play back selected audio file from the list of previously saved audio files.
  */
 public class ListenFragment extends Fragment implements View.OnClickListener {
 
@@ -38,7 +39,13 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
 
     }
 
-
+    /**
+     * Set up media player and connect to web service to retrieve audio file.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return created view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,10 +74,14 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
 
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
+            /**
+             * Async prepare for media player.
+             * @param player
+             */
             @Override
             public void onPrepared(MediaPlayer player) {
                 int duration = player.getDuration();
-                String durationString = String.format("%d:%d",
+                String durationString = String.format("%d:%02d",
                         TimeUnit.MILLISECONDS.toMinutes(duration),
                         TimeUnit.MILLISECONDS.toSeconds(duration) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
@@ -92,6 +103,11 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    /**
+     * Retrieve file name from audio file.
+     * @param file audio file
+     * @return name
+     */
     public String getFileName(AudioFile file) {
         Log.i("LF getFileName", file.getFileName());
         if (file != null) {
@@ -102,7 +118,10 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
+    /**
+     * On click actions for play and pause button.
+     * @param view
+     */
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.media_play:
@@ -113,4 +132,17 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    /**
+     * Stop and release media player when not active screen.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMediaPlayer.pause();
+        mMediaPlayer.release();
+        mMediaPlayer = null;
+    }
+
+
 }

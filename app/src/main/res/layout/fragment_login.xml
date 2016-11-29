@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="tcss450.uw.edu.whisper.signin.LoginFragment">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/userid_edit"
+        android:inputType="textWebEmailAddress"
+        android:hint="@string/userid_hint"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pwd_edit"
+        android:inputType="textPassword"
+        android:hint="@string/pwd_hint"/>
+
+    <!-- possibly add onClick -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:id="@+id/login_button"
+        android:text="@string/login_text"/>
+
+    <TextView
+        android:text="@string/register"
+        android:textSize="16dp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/new_user"
+        />
+
+</LinearLayout>
