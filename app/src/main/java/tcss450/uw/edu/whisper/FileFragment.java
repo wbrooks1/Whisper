@@ -84,11 +84,15 @@ public class FileFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        mRecyclerView.getAdapter().notifyDataSetChanged();
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+            getActivity().recreate();
+        } else {
+        }
+    }
 
 
     @Override
