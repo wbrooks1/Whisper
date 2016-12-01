@@ -44,6 +44,17 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
 
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (getSupportFragmentManager().findFragmentById(R.id.list) == null) {
+//            FileFragment fileFragment = new FileFragment();
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.fragment_container, fileFragment)
+//                    .commit();
+//        }
+//    }
+
     /**
      * Opens Listen Fragment for selected file.
      * @param item

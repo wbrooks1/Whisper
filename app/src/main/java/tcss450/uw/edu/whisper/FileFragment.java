@@ -84,6 +84,12 @@ public class FileFragment extends Fragment {
         return view;
     }
 
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        mRecyclerView.getAdapter().notifyDataSetChanged();
+//    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -100,6 +106,10 @@ public class FileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void updateFileFragment() {
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     /**

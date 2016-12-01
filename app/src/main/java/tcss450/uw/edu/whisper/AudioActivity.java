@@ -2,11 +2,13 @@ package tcss450.uw.edu.whisper;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.text.InputType;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.os.Bundle;
@@ -19,18 +21,29 @@ import android.content.Context;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 
 /**
  * @author William Almond
@@ -41,7 +54,7 @@ import java.net.URLEncoder;
 public class AudioActivity extends AppCompatActivity {
 
     private final static String FILE_UPLOAD_URL
-            = "http://cssgate.insttech.washington.edu/~_450team4/uploadFile.php?";
+            = "http://cssgate.insttech.washington.edu/~_450team4/saveFile.php?";
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static String mFilePath = null;
@@ -54,8 +67,10 @@ public class AudioActivity extends AppCompatActivity {
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer;
 
+
     /**
      * Switch that calls start and stop recording.
+     *
      * @param start boolean true indicating start, false indicating stop.
      */
     private void onRecord(boolean start) {
@@ -93,6 +108,18 @@ public class AudioActivity extends AppCompatActivity {
         mRecorder.release();
         mRecorder = null;
         fileInfoPrompt();
+//        byte[] soundBytes;
+//
+//        try {
+//            InputStream inputStream = getContentResolver().openInputStream(Uri.fromFile(new File(mFilePath)));
+//            soundBytes = new byte[inputStream.available()];
+//
+//            soundBytes = toByteArray(inputStream);
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+        uploadFile();
+
     }
 
     /**
@@ -119,7 +146,7 @@ public class AudioActivity extends AppCompatActivity {
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(fileNameInput.getText() == null) {
+                if (fileNameInput.getText() == null) {
                     mFilePath.replace("audiorecordtest.3gp", "untitiled.3gp");
                     mFileName = "untitled";
                 } else {
@@ -140,10 +167,9 @@ public class AudioActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * @author William Almond
-     * Creates custom Record button with a listener.
+     *         Creates custom Record button with a listener.
      */
     class RecordButton extends Button {
         boolean mStartRecording = true;
@@ -164,6 +190,7 @@ public class AudioActivity extends AppCompatActivity {
 
         /**
          * Class contructor for RecordButton
+         *
          * @param ctx Context is the parent of Activity and View.
          */
         public RecordButton(Context ctx) {
@@ -172,11 +199,12 @@ public class AudioActivity extends AppCompatActivity {
             setOnClickListener(clicker);
         }
     }
+
     /**
      * @author William Almond
-     * Creates custom Play button with a listener.
+     *         Creates custom Play button with a listener.
      */
-    class PlayButton extends Button{
+    class PlayButton extends Button {
         boolean mStartPlaying = true;
 
         OnClickListener clicker = new OnClickListener() {
@@ -192,11 +220,13 @@ public class AudioActivity extends AppCompatActivity {
                 mStartPlaying = !mStartPlaying;
             }
         };
+
         /**
          * Class contructor for PlayButton
+         *
          * @param ctx Context is the parent of Activity and View.
          */
-        public PlayButton(Context ctx){
+        public PlayButton(Context ctx) {
             super(ctx);
             setText("Preview Audio");
             setOnClickListener(clicker);
@@ -206,6 +236,7 @@ public class AudioActivity extends AppCompatActivity {
 
     /**
      * Switch that calls start and stop playing.
+     *
      * @param start boolean true indicating start, false indicating stop.
      */
     private void onPlay(boolean start) {
@@ -215,6 +246,7 @@ public class AudioActivity extends AppCompatActivity {
             stopPlaying();
         }
     }
+
     /**
      * Sets up the audio output, gets the file name and starts the playing.
      */
@@ -248,6 +280,7 @@ public class AudioActivity extends AppCompatActivity {
 
     /**
      * Creates the layout and buttons being drawn on the device screen.
+     *
      * @param icicle Bundle.
      */
     @Override
@@ -286,9 +319,10 @@ public class AudioActivity extends AppCompatActivity {
 
     /**
      * Gets the file name and returns a string of the name.
+     *
      * @return mFileName that is the file name in string format.
      */
-    public String getmFileName(){
+    public String getmFileName() {
         return mFilePath;
     }
 
@@ -319,6 +353,26 @@ public class AudioActivity extends AppCompatActivity {
         return sb.toString();
     }
 
+
+    private byte[] toByteArray(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int read = 0;
+        byte[] buffer = new byte[1024];
+        while (read != -1) {
+            read = in.read(buffer);
+            if (read != -1)
+                out.write(buffer, 0, read);
+        }
+        out.close();
+        return out.toByteArray();
+    }
+
+
+    public void uploadFile() {
+
+    }
+
+
     /**
      * async task for using web services for uploading file info
      */
@@ -335,6 +389,7 @@ public class AudioActivity extends AppCompatActivity {
 
         /**
          * tries to add user
+         *
          * @param urls the url to upload file
          * @return the response for trying to upload file
          */
@@ -398,7 +453,14 @@ public class AudioActivity extends AppCompatActivity {
                         e.getMessage(), Toast.LENGTH_LONG).show();
                 Log.i("JSON exception", e.getMessage());
             }
-        }
+            //updateFileFragment();
+       }
     }
 
+//    /**
+//     * Update the list view of files
+//     */
+//    public interface UpdateFileFragment {
+//        void updateFileFragment();
+//    }
 }
