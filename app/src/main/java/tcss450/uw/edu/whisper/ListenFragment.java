@@ -1,6 +1,7 @@
 package tcss450.uw.edu.whisper;
 
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
 
     private static final String URL = "http://cssgate.insttech.washington.edu/~_450team4/uploads/";
     private String mFileName;
+    private String mFilePath;
     private TextView mFileNameTextView;
     private TextView mAudioDurationTextView;
     public final static String FILE_ITEM_SELECTED = "file_selected";
@@ -58,12 +60,12 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             Log.i("ListenFragment", "args not null" + args.toString());
             mFileName = getFileName((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
         }
-        String url = URL + mFileName + ".3gp";
-        Log.i("LF onCreateView", url);
+        mFilePath = URL + mFileName + ".3gp";
+        Log.i("LF onCreateView", mFilePath);
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            mMediaPlayer.setDataSource(url);
+            mMediaPlayer.setDataSource(mFilePath);
             mMediaPlayer.prepareAsync();
 
 
@@ -96,8 +98,10 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         mFileNameTextView.setText(mFileName);
         ImageButton playButton = (ImageButton) view.findViewById(R.id.media_play);
         ImageButton pauseButton = (ImageButton) view.findViewById(R.id.media_pause);
+        ImageButton shareButton = (ImageButton) view.findViewById(R.id.media_share);
         playButton.setOnClickListener(this);
         pauseButton.setOnClickListener(this);
+        shareButton.setOnClickListener(this);
 
 
         return view;
@@ -130,6 +134,9 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             case R.id.media_pause:
                 mMediaPlayer.pause();
                 break;
+            case R.id.media_share:
+                shareFile();
+                break;
         }
     }
 
@@ -144,5 +151,12 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         mMediaPlayer = null;
     }
 
+    public void shareFile() {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, mFilePath);
+        shareIntent.setType("audio/*");
+        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.app_name)));
+    }
 
 }
