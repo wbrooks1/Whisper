@@ -59,6 +59,10 @@ public class AudioFile implements Serializable {
         return reason;
     }
 
+    public void deleteFile() {
+
+    }
+
     public String getFileName() {
         return mFileName;
     }

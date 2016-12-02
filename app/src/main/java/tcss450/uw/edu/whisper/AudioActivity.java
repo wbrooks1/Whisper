@@ -333,6 +333,8 @@ public class AudioActivity extends AppCompatActivity {
      * @return
      */
     private String buildFileUploadURL() {
+        //TODO: get actual username.
+        String userName = "user";
         View v = this.findViewById(android.R.id.content);
         StringBuilder sb = new StringBuilder(FILE_UPLOAD_URL);
 
@@ -344,6 +346,8 @@ public class AudioActivity extends AppCompatActivity {
             sb.append("&content=");
             String content = CONTENT_URL + mFileName + ".3gp";
             sb.append(URLEncoder.encode(content, "UTF-8"));
+            sb.append("&user=");
+            sb.append(URLEncoder.encode(userName, "UTF-8"));
             Log.i("AudioActivity", sb.toString());
         } catch (Exception e) {
             Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
