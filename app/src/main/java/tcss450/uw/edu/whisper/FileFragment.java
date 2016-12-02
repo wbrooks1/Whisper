@@ -90,7 +90,6 @@ public class FileFragment extends Fragment {
         if (mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
             getActivity().recreate();
-        } else {
         }
     }
 
@@ -112,9 +111,6 @@ public class FileFragment extends Fragment {
         mListener = null;
     }
 
-    public void updateFileFragment() {
-        mRecyclerView.getAdapter().notifyDataSetChanged();
-    }
 
     /**
      * List item interaction interface implemented by WebServiceActivity.

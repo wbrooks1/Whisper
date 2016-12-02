@@ -2,13 +2,9 @@ package tcss450.uw.edu.whisper;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.app.Activity;
-import android.text.InputType;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.os.Bundle;
@@ -16,22 +12,16 @@ import android.os.Environment;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.content.Context;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,10 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.SocketException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.net.UnknownHostException;
 
 /**
  * @author William Almond
@@ -55,6 +43,10 @@ public class AudioActivity extends AppCompatActivity {
 
     private final static String FILE_UPLOAD_URL
             = "http://cssgate.insttech.washington.edu/~_450team4/saveFile.php?";
+    private final static String BYTE_UPLOAD_URL
+            = "http://cssgate.insttech.washington.edu/~_450team4/uploadFile.php?";
+    private final static String CONTENT_URL
+            = "http://cssgate.insttech.washington.edu/~_450team4/uploads/";
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static String mFilePath = null;
@@ -108,64 +100,9 @@ public class AudioActivity extends AppCompatActivity {
         mRecorder.release();
         mRecorder = null;
         fileInfoPrompt();
-//        byte[] soundBytes;
-//
-//        try {
-//            InputStream inputStream = getContentResolver().openInputStream(Uri.fromFile(new File(mFilePath)));
-//            soundBytes = new byte[inputStream.available()];
-//
-//            soundBytes = toByteArray(inputStream);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-        uploadFile();
+
 
     }
-
-    /**
-     * @author Winfield Brooks
-     * Prompts user for file name and description after recording has been finished.
-     */
-    public void fileInfoPrompt() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("File Name and Description");
-
-        Context context = builder.getContext();
-        LinearLayout layout = new LinearLayout(context);
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        final EditText fileNameInput = new EditText(context);
-        fileNameInput.setHint("Title");
-        layout.addView(fileNameInput);
-
-        final EditText fileDescriptionInput = new EditText(context);
-        fileDescriptionInput.setHint("Description (optional))");
-        layout.addView(fileDescriptionInput);
-
-        builder.setView(layout);
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (fileNameInput.getText() == null) {
-                    mFilePath.replace("audiorecordtest.3gp", "untitiled.3gp");
-                    mFileName = "untitled";
-                } else {
-                    mFilePath.replace("audiorecordtest.3gp", fileNameInput.getText().toString() + ".3gp");
-                    mFileName = fileNameInput.getText().toString();
-                }
-                mFileDescription = fileDescriptionInput.getText().toString();
-                upladAudioFile(buildFileUploadURL());
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-    }
-
 
     /**
      * @author William Almond
@@ -323,15 +260,78 @@ public class AudioActivity extends AppCompatActivity {
      * @return mFileName that is the file name in string format.
      */
     public String getmFileName() {
+        return mFileName;
+    }
+
+    /**
+     * Gets the file path and returns a string of the path.
+     *
+     * @return mFilePath that is the file path in string format.
+     */
+    public String getmFilePath() {
         return mFilePath;
     }
 
-    public void upladAudioFile(String url) {
+    /**
+     * @author Winfield Brooks
+     * Prompts user for file name and description after recording has been finished.
+     */
+    public void fileInfoPrompt() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("File Name and Description");
+
+        Context context = builder.getContext();
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText fileNameInput = new EditText(context);
+        fileNameInput.setHint("Title");
+        layout.addView(fileNameInput);
+
+        final EditText fileDescriptionInput = new EditText(context);
+        fileDescriptionInput.setHint("Description (optional))");
+        layout.addView(fileDescriptionInput);
+
+        builder.setView(layout);
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (fileNameInput.getText() == null) {
+                    mFilePath.replace("audiorecordtest.3gp", "untitiled.3gp");
+                    mFileName = "untitled";
+                } else {
+                    mFilePath.replace("audiorecordtest.3gp", fileNameInput.getText().toString() + ".3gp");
+                    mFileName = fileNameInput.getText().toString();
+                }
+                mFileDescription = fileDescriptionInput.getText().toString();
+                upladAudioFileInfo(buildFileUploadURL());
+                uploadFile();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+
+    /**
+     * Calls async task to upload file info to database.
+     * @param url url of php to handle uploading to database.
+     */
+    public void upladAudioFileInfo(String url) {
         Log.i("uploadAudioFile", url.toString());
-        FileUploadTask task = new FileUploadTask();
+        FileInfoUploadTask task = new FileInfoUploadTask();
         task.execute(new String[]{url.toString()});
     }
 
+    /**
+     * Builds the url for request to store file
+     * @return
+     */
     private String buildFileUploadURL() {
         View v = this.findViewById(android.R.id.content);
         StringBuilder sb = new StringBuilder(FILE_UPLOAD_URL);
@@ -342,7 +342,7 @@ public class AudioActivity extends AppCompatActivity {
             sb.append("&fileDesc=");
             sb.append(URLEncoder.encode(mFileDescription, "UTF-8"));
             sb.append("&content=");
-            String content = "a url will go here";
+            String content = CONTENT_URL + mFileName + ".3gp";
             sb.append(URLEncoder.encode(content, "UTF-8"));
             Log.i("AudioActivity", sb.toString());
         } catch (Exception e) {
@@ -353,30 +353,19 @@ public class AudioActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-
-    private byte[] toByteArray(InputStream in) throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        int read = 0;
-        byte[] buffer = new byte[1024];
-        while (read != -1) {
-            read = in.read(buffer);
-            if (read != -1)
-                out.write(buffer, 0, read);
-        }
-        out.close();
-        return out.toByteArray();
-    }
-
-
+    /**
+     * Calls async task to upload audio file data to cssgate.
+     */
     public void uploadFile() {
-
+        UploadFileAsync task = new UploadFileAsync();
+        task.execute("");
     }
 
 
     /**
      * async task for using web services for uploading file info
      */
-    private class FileUploadTask extends AsyncTask<String, Void, String> {
+    private class FileInfoUploadTask extends AsyncTask<String, Void, String> {
 
 
         /**
@@ -433,11 +422,8 @@ public class AudioActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
             try {
-                Log.i("status", "right before status");
                 JSONObject jsonObject = new JSONObject(result);
-                Log.i("status", "right after JSONObject call");
                 String status = (String) jsonObject.get("result");
-                Log.i("status", status);
                 if (status.equals("success")) {
                     Toast.makeText(getApplicationContext(), "File successfully uploaded!"
                             , Toast.LENGTH_LONG)
@@ -453,14 +439,112 @@ public class AudioActivity extends AppCompatActivity {
                         e.getMessage(), Toast.LENGTH_LONG).show();
                 Log.i("JSON exception", e.getMessage());
             }
-            //updateFileFragment();
-       }
+        }
     }
 
-//    /**
-//     * Update the list view of files
-//     */
-//    public interface UpdateFileFragment {
-//        void updateFileFragment();
-//    }
+    /**
+     * Async task to upload the audio file data.
+     * This is adapted from solution http://stackoverflow.com/questions/25398200/uploading-file-in-php-server-from-android-device
+     * @author Winfield Brooks
+     */
+    private class UploadFileAsync extends AsyncTask<String, Void, String> {
+
+        /**
+         * Establishes connection and makes Post request to upload file to cssgate.
+         * @param params no params
+         * @return nothing
+         */
+        @Override
+        protected String doInBackground(String... params) {
+
+            String fileName = mFileName + ".3gp";
+            HttpURLConnection conn = null;
+            DataOutputStream dos = null;
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+            int bytesRead, bytesAvailable, bufferSize;
+            byte[] buffer;
+            int maxBufferSize = 1 * 1024 * 1024;
+            File sourceFile = new File(mFilePath);
+
+            if (!sourceFile.isFile()) {
+                Log.e("uploadFile", "Source File not exist :" + mFilePath);
+            } else {
+                try {
+                    // open a URL connection to the Servlet
+                    FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                    URL url = new URL(BYTE_UPLOAD_URL);
+                    // Open a HTTP  connection to  the URL
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true); // Allow Inputs
+                    conn.setDoOutput(true); // Allow Outputs
+                    conn.setUseCaches(false); // Don't use a Cached Copy
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Connection", "Keep-Alive");
+                    conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                    conn.setRequestProperty("uploaded_file", fileName);
+
+                    dos = new DataOutputStream(conn.getOutputStream());
+                    dos.writeBytes(twoHyphens + boundary + lineEnd);
+                    dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                            + fileName + "\"" + lineEnd);
+                    dos.writeBytes(lineEnd);
+
+                    // create a buffer of  maximum size
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    buffer = new byte[bufferSize];
+
+                    // read file and write it into form...
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    while (bytesRead > 0) {
+
+                        dos.write(buffer, 0, bufferSize);
+                        bytesAvailable = fileInputStream.available();
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    }
+                    // send multipart form data necesssary after file data...
+                    dos.writeBytes(lineEnd);
+                    dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                    // Responses from the server (code and message)
+                    int serverResponseCode = conn.getResponseCode();
+                    String serverResponseMessage = conn.getResponseMessage();
+                    Log.i("uploadFile", "HTTP Response is : "
+                            + serverResponseMessage + ": " + serverResponseCode);
+                    //close the streams //
+                    fileInputStream.close();
+                    dos.flush();
+                    dos.close();
+                } catch (MalformedURLException ex) {
+                    ex.printStackTrace();
+                    Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return "";
+        }
+
+        /**
+         * Prints out result of file upload.
+         * @param result result from uploadFile.php
+         */
+        @Override
+        protected void onPostExecute(String result) {
+            // Something wrong with the network or the URL.
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                String status = (String) jsonObject.get("result");
+                Log.i("upload status", status);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

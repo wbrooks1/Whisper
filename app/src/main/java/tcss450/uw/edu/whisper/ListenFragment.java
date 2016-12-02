@@ -25,7 +25,7 @@ import tcss450.uw.edu.whisper.file.AudioFile;
  */
 public class ListenFragment extends Fragment implements View.OnClickListener {
 
-    private static final String URL = "http://cssgate.insttech.washington.edu/~_450team4/";
+    private static final String URL = "http://cssgate.insttech.washington.edu/~_450team4/uploads/";
     private String mFileName;
     private TextView mFileNameTextView;
     private TextView mAudioDurationTextView;
