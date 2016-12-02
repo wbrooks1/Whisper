@@ -30,7 +30,7 @@ import tcss450.uw.edu.whisper.file.AudioFile;
 public class FileFragment extends Fragment {
 
     private static final String FILE_URL
-            = "http://cssgate.insttech.washington.edu/~_450team4/fileList.php?cmd=files";
+            = "http://cssgate.insttech.washington.edu/~_450team4/fileList.php?cmd=files&user=";
     private RecyclerView mRecyclerView;
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -78,10 +78,22 @@ public class FileFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+            //TODO: get real username.
+            String user = "user";
+            String url = FILE_URL + user;
             DownloadCoursesTask task = new DownloadCoursesTask();
-            task.execute(new String[]{FILE_URL});
+            task.execute(new String[]{url});
         }
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mRecyclerView.getAdapter() != null) {
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+            getActivity().recreate();
+        }
     }
 
 
@@ -101,6 +113,7 @@ public class FileFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * List item interaction interface implemented by WebServiceActivity.
