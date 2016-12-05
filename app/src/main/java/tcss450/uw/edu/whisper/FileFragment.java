@@ -82,8 +82,8 @@ public class FileFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //TODO: get real username.
-            String user = "user";
+
+            String user = SignInActivity.getUserName();
             String url = FILE_URL + user;
             DownloadCoursesTask task = new DownloadCoursesTask();
             task.execute(new String[]{url});
