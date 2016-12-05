@@ -1,8 +1,11 @@
 package tcss450.uw.edu.whisper;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
@@ -30,6 +33,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -48,7 +52,7 @@ public class AudioActivity extends AppCompatActivity {
     private final static String CONTENT_URL
             = "http://cssgate.insttech.washington.edu/~_450team4/uploads/";
 
-    private static final String LOG_TAG = "AudioRecordTest";
+    private static final String LOG_TAG = "AudioActivity";
     private static String mFilePath = null;
     private String mFileName = null;
     private String mFileDescription = null;
@@ -100,8 +104,6 @@ public class AudioActivity extends AppCompatActivity {
         mRecorder.release();
         mRecorder = null;
         fileInfoPrompt();
-
-
     }
 
     /**
@@ -272,6 +274,17 @@ public class AudioActivity extends AppCompatActivity {
         return mFilePath;
     }
 
+    public void shareFile(View view) {
+       // Uri uri = FileProvider.getUriForFile(getApplicationContext(), FILES_AUTHORITY, mFilePath)
+        Uri uri = Uri.fromFile(new File(mFilePath));
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.setType("audio/*");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.app_name)));
+    }
+
     /**
      * @author Winfield Brooks
      * Prompts user for file name and description after recording has been finished.
@@ -279,7 +292,7 @@ public class AudioActivity extends AppCompatActivity {
     public void fileInfoPrompt() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("File Name and Description");
-
+        builder.setCancelable(false);
         Context context = builder.getContext();
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -296,16 +309,22 @@ public class AudioActivity extends AppCompatActivity {
         builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (fileNameInput.getText() == null) {
-                    mFilePath.replace("audiorecordtest.3gp", "untitiled.3gp");
-                    mFileName = "untitled";
+                if (fileNameInput.getText().toString().contains(" ")) {
+                    fileNameInput.setError("No Spaces Allowed");
+                    Toast.makeText(getApplicationContext(), "No Spaces Allowed In File Name", Toast.LENGTH_LONG).show();
+                    fileInfoPrompt();
                 } else {
-                    mFilePath.replace("audiorecordtest.3gp", fileNameInput.getText().toString() + ".3gp");
-                    mFileName = fileNameInput.getText().toString();
+                    if (fileNameInput.getText() == null) {
+                        mFilePath.replace("audiorecordtest.3gp", "untitiled.3gp");
+                        mFileName = "untitled";
+                    } else {
+                        mFilePath.replace("audiorecordtest.3gp", fileNameInput.getText().toString() + ".3gp");
+                        mFileName = fileNameInput.getText().toString();
+                    }
+                    mFileDescription = fileDescriptionInput.getText().toString();
+                    upladAudioFileInfo(buildFileUploadURL());
+                    uploadFile();
                 }
-                mFileDescription = fileDescriptionInput.getText().toString();
-                upladAudioFileInfo(buildFileUploadURL());
-                uploadFile();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -460,8 +479,9 @@ public class AudioActivity extends AppCompatActivity {
          */
         @Override
         protected String doInBackground(String... params) {
-
-            String fileName = mFileName + ".3gp";
+            //TODO: get real userName
+            String userName = "user";
+            String fileName = mFileName + userName + ".3gp";
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
             String lineEnd = "\r\n";

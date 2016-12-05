@@ -4,6 +4,7 @@ package tcss450.uw.edu.whisper;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -60,7 +62,9 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             Log.i("ListenFragment", "args not null" + args.toString());
             mFileName = getFileName((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
         }
-        mFilePath = URL + mFileName + ".3gp";
+        //TODO: get real username
+        String user = "user";
+        mFilePath = URL + mFileName + user + ".3gp";
         Log.i("LF onCreateView", mFilePath);
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -150,13 +154,16 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         mMediaPlayer.release();
         mMediaPlayer = null;
     }
-
+    //TODO: make work or delete
     public void shareFile() {
+        Uri uri = Uri.parse(mFilePath);
+        Log.i("Share uri", uri.toString());
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, mFilePath);
         shareIntent.setType("audio/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+//        shareIntent.setType("audio/*");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.app_name)));
     }
-
 }
