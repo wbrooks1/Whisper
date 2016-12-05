@@ -57,8 +57,8 @@
             android:id="@+id/media_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
-            android:src="@android:drawable/ic_media_play" />
+            android:layout_gravity="end"
+            android:src="@android:drawable/ic_menu_share" />
 
     </LinearLayout>
 
