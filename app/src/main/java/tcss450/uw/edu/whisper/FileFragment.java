@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tcss450.uw.edu.whisper.file.AudioFile;
+import tcss450.uw.edu.whisper.signin.SignInActivity;
 
 /**
  * @author Winfield Brooks
@@ -36,6 +37,8 @@ public class FileFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private DeleteFileInteractionListener mDeleteListener;
+
     public final static String FILE_ITEM_SELECTED = "file_selected";
 
 
@@ -73,6 +76,7 @@ public class FileFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             mRecyclerView = (RecyclerView) view;
+            mRecyclerView.setNestedScrollingEnabled(false);
             if (mColumnCount <= 1) {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -102,6 +106,7 @@ public class FileFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
+            mDeleteListener = (DeleteFileInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -114,12 +119,15 @@ public class FileFragment extends Fragment {
         mListener = null;
     }
 
-
     /**
      * List item interaction interface implemented by WebServiceActivity.
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(AudioFile item);
+    }
+
+    public interface DeleteFileInteractionListener {
+        void onDeleteInteraction(AudioFile item);
     }
 
     /**
@@ -181,7 +189,7 @@ public class FileFragment extends Fragment {
             if (!fileList.isEmpty()) {
                 Log.i("FileFragment", mListener.toString());
 
-                mRecyclerView.setAdapter(new MyFileRecyclerViewAdapter(fileList, mListener));
+                mRecyclerView.setAdapter(new MyFileRecyclerViewAdapter(fileList, mListener, mDeleteListener));
             }
         }
     }

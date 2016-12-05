@@ -1,11 +1,16 @@
 package tcss450.uw.edu.whisper;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.media.Image;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import tcss450.uw.edu.whisper.FileFragment.OnListFragmentInteractionListener;
@@ -20,15 +25,17 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
 
     private final List<AudioFile> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final FileFragment.DeleteFileInteractionListener mDeleteListener;
 
     /**
      * Class constructor.
      * @param items a list of audio files.
      * @param listener the list fragment listener.
      */
-    public MyFileRecyclerViewAdapter(List<AudioFile> items, OnListFragmentInteractionListener listener) {
+    public MyFileRecyclerViewAdapter(List<AudioFile> items, OnListFragmentInteractionListener listener, FileFragment.DeleteFileInteractionListener delete) {
         mValues = items;
         mListener = listener;
+        mDeleteListener = delete;
     }
 
     /**
@@ -54,7 +61,14 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getFileName());
         holder.mContentView.setText(mValues.get(position).getDesc());
-
+        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mDeleteListener) {
+                    mDeleteListener.onDeleteInteraction(holder.mItem);
+                }
+            }
+        });
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +99,7 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
         public final ImageView mThumbnailView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final ImageButton mDeleteButton;
         public AudioFile mItem;
 
         public ViewHolder(View view) {
@@ -93,6 +108,7 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
             mThumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            mDeleteButton = (ImageButton) view.findViewById(R.id.delete_button);
         }
 
         /**
@@ -105,4 +121,35 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
             return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
+
+//    /**
+//     * Deletes file from database.
+//     * @param view
+//     */
+//    public void deleteFile(View view) {
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Are you sure you to delete file: " + (mValues.get(position).getFileName());
+//
+//        Context context = builder.getContext();
+//        LinearLayout layout = new LinearLayout(context);
+//        layout.setOrientation(LinearLayout.VERTICAL);
+//
+//        builder.setView(layout);
+//        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//
+//            }
+//        });
+//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//            }
+//        });
+//        builder.show();
+//
+//    }
 }
