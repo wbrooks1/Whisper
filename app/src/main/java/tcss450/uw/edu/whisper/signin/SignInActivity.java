@@ -7,6 +7,7 @@ import android.net.nsd.NsdManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -17,18 +18,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import tcss450.uw.edu.whisper.R;
 import tcss450.uw.edu.whisper.WebServiceActivity;
 
 /**
  * @author Jacob Tillett
+ * @version 12/4/2016
  * Class controls the sign in to the application.
  */
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,  RegisterFragment.AddUserListener, LoginFragment.loginListener {
 
     /** helps allow app to remember who was loggin in */
     private SharedPreferences mSharedPreferences;
+
+    private  ArrayList<String> mUserList;
 
     /**
      * creates a saved preference and if logged in goes to webserviceactivity
@@ -71,6 +76,16 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
     }
 
+    /**
+     * for getting the username in another part of the app so we can use the username in the database
+     * @return the username of the person logged in
+     */
+    public static String getUserName() {
+        return LoginFragment.userId;
+    }
+
+
+
 
     /**
      * adds the user to the database
@@ -88,6 +103,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
     @Override
     public void loginListener(String url) {
         LoginTask task = new LoginTask();
+        task.execute(new String[]{url.toString()});
 
     }
 
@@ -228,23 +244,34 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         @Override
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String status = (String) jsonObject.get("result");
-                if (status.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "Logged In!"
-                            , Toast.LENGTH_LONG)
-                            .show();
+
+            mUserList = new ArrayList<String>();
+            result = LoginFragment.parseUserJSON(result, mUserList);
+
+            System.out.print(mUserList.get(0));
+            Log.v("user LIst", mUserList.get(0));
+
+
+            String user = LoginFragment.userId;
+            String pwd = LoginFragment.pwd;
+
+            if(mUserList.contains(user))  {
+                Log.v("USER", mUserList.get(mUserList.indexOf(user)));
+                Log.v("PWD", mUserList.get(mUserList.indexOf(user)  +  1));
+                if(pwd.matches(mUserList.get(mUserList.indexOf(user) + 1))) {
+                    login(user, pwd);
+                    Toast.makeText(getApplicationContext(), "Logged In", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to Login: "
-                                    + jsonObject.get("error")
-                            , Toast.LENGTH_LONG)
-                            .show();
+                    Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
                 }
-            } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "Something wrong with the data" +
-                        e.getMessage(), Toast.LENGTH_LONG).show();
+
+
+            } else {
+                Toast.makeText(getApplicationContext(), "Incorrect User Name", Toast.LENGTH_SHORT).show();
             }
+
+
+
         }
     }
 

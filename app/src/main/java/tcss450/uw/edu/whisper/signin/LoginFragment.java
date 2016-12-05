@@ -21,13 +21,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import tcss450.uw.edu.whisper.R;
 
 /**
  * @author Jacob Tillett
+ * @version 12/4/2016
  * A simple {@link Fragment} subclass.
  * a fragment for logging in the user
  */
@@ -40,6 +43,10 @@ public class LoginFragment extends Fragment {
     public EditText userIdText;
     /** the listener for logging in */
     public loginListener mListener;
+
+
+    protected static String pwd;
+    protected static String userId;
 
     /**
      * empty constructor
@@ -68,16 +75,10 @@ public class LoginFragment extends Fragment {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = userIdText.getText().toString();
-                String pwd = pwdText.getText().toString();
+                userId = userIdText.getText().toString();
+                pwd = pwdText.getText().toString();
                 if(TextUtils.isEmpty(userId)) {
                     Toast.makeText(v.getContext(), "Enter User ID"
-                            , Toast.LENGTH_SHORT).show();
-                    userIdText.requestFocus();
-                    return;
-                }
-                if(!userId.contains("@")) {
-                    Toast.makeText(v.getContext(), "Enter a valid email address"
                             , Toast.LENGTH_SHORT).show();
                     userIdText.requestFocus();
                     return;
@@ -88,15 +89,12 @@ public class LoginFragment extends Fragment {
                     pwdText.requestFocus();
                     return;
                 }
-                if(pwd.length() < 3) {
-                    Toast.makeText(v.getContext(), "Password must be atleast 4 characters"
-                            , Toast.LENGTH_SHORT).show();
-                    pwdText.requestFocus();
-                    return;
-                }
 
 
-                ((SignInActivity) getActivity()).login(userId, pwd);
+                String url = buildRUserURL(v);
+                mListener.loginListener(url);
+
+
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +113,10 @@ public class LoginFragment extends Fragment {
 
         return v;
     }
+
+
+
+
 
 
     /**
@@ -179,7 +181,7 @@ public class LoginFragment extends Fragment {
      * @param v the view
      * @return the url
      */
-    private String buildRUserrURL(View v) {
+    private String buildRUserURL(View v) {
 
         StringBuilder sb = new StringBuilder(LOGIN_URL);
 

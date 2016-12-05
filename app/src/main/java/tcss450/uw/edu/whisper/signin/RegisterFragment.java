@@ -21,6 +21,7 @@ import tcss450.uw.edu.whisper.R;
 
 /**
  * @author Jacob Tillett
+ * @version 12/4/2016
  * A simple {@link Fragment} subclass.
  * fragment for registering the user
  */
@@ -76,19 +77,13 @@ public class RegisterFragment extends Fragment {
                     userIdText.requestFocus();
                     return;
                 }
-                if(!userId.contains("@")) {
-                    Toast.makeText(v.getContext(), "Enter a valid email address"
-                            , Toast.LENGTH_SHORT).show();
-                    userIdText.requestFocus();
-                    return;
-                }
                 if(TextUtils.isEmpty(pwd)) {
                     Toast.makeText(v.getContext(), "Enter password"
                             , Toast.LENGTH_SHORT).show();
                     pwdText.requestFocus();
                     return;
                 }
-                if(pwd.length() < 3) {
+                if(pwd.length() < 4) {
                     Toast.makeText(v.getContext(), "Password must be atleast 4 characters"
                             , Toast.LENGTH_SHORT).show();
                     pwdText.requestFocus();
@@ -109,8 +104,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
                 if(pwd.contentEquals(confirmPwd)) {
-                    Toast.makeText(v.getContext(), "User Registered"
-                            , Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -186,7 +180,7 @@ public class RegisterFragment extends Fragment {
             String password = pwdText.getText().toString();
             sb.append("&pwd=");
             sb.append(URLEncoder.encode(password, "UTF-8"));
-            //sb.append(password);
+
 
             Log.i("RegisterFragment", sb.toString());
         } catch (Exception e) {
