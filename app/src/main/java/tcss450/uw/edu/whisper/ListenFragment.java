@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
     private TextView mAudioDurationTextView;
     public final static String FILE_ITEM_SELECTED = "file_selected";
     private MediaPlayer mMediaPlayer;
+    private SeekBar mSeek;
+    private TextView mTextView;
 
 
 
@@ -52,6 +55,8 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listen, container, false);
+        mSeek = (SeekBar)view.findViewById(R.id.mSeek);
+        mTextView = (TextView)view.findViewById(R.id.mTextView);
         mFileNameTextView = (TextView) view.findViewById(R.id.fileName);
         mAudioDurationTextView = (TextView) view.findViewById(R.id.audioDuration);
         Bundle args = getArguments();
@@ -93,6 +98,29 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
                 player.start();
             }
 
+        });
+        mSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+            {
+                seekBar.setMax(mMediaPlayer.getDuration() / 1000);
+                mTextView.setText(progress + "/" + seekBar.getMax());
+
+                if(fromUser)
+                {
+                    mMediaPlayer.seekTo(progress*1000);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
         });
 
         mFileNameTextView.setText(mFileName);

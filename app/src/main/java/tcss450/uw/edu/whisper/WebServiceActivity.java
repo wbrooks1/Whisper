@@ -70,6 +70,14 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
     }
+    /**
+     * Route to speech to text activity view.
+     * @param view
+     */
+    public void toTextActivity(View view) {
+        Intent intent = new Intent(this, SpeechNote.class);
+        startActivity(intent);
+    }
 
     /**
      * this method inflates the menu bar

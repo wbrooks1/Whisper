@@ -30,4 +30,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/commons-net-3.5.jar')
+//    compile 'com.cleveroad:audiovisualization:0.9.1'
 }

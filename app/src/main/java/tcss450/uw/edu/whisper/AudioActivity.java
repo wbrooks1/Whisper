@@ -16,6 +16,8 @@ import android.content.Context;
 import android.util.Log;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -58,6 +60,8 @@ public class AudioActivity extends AppCompatActivity {
     private PlayButton mPlayButton = null;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer;
+    private SeekBar mSeek;
+    private TextView mTextView;
 
 
     /**
@@ -116,10 +120,10 @@ public class AudioActivity extends AppCompatActivity {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
                     setText("Stop recording");
-                    mRecordButton.setBackgroundColor(Color.RED);
+                   // mRecordButton.setBackgroundColor(Color.RED);
                 } else {
                     setText("Start recording");
-                    mRecordButton.setBackgroundColor(Color.BLUE);
+                   // mRecordButton.setBackgroundColor(Color.BLUE);
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -149,10 +153,10 @@ public class AudioActivity extends AppCompatActivity {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
                     setText("Stop playing");
-                    mRecordButton.setBackgroundColor(Color.RED);
+                    //mRecordButton.setBackgroundColor(Color.RED);
                 } else {
                     setText("Start playing");
-                    mRecordButton.setBackgroundColor(Color.GREEN);
+                    //mRecordButton.setBackgroundColor(Color.GREEN);
                 }
                 mStartPlaying = !mStartPlaying;
             }
@@ -225,21 +229,59 @@ public class AudioActivity extends AppCompatActivity {
         super.onCreate(icicle);
 
         LinearLayout ll = new LinearLayout(this);
+//        mSeek = (SeekBar)ll.findViewById(R.id.mSeek);
+//        mTextView = (TextView)ll.findViewById(R.id.mTextView);
         mRecordButton = new RecordButton(this);
-        mRecordButton.setBackgroundColor(Color.BLUE);
+        //mRecordButton.setBackgroundColor(Color.BLUE);
         ll.addView(mRecordButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         mPlayButton = new PlayButton(this);
-        mPlayButton.setBackgroundColor(Color.GREEN);
+       // mPlayButton.setBackgroundColor(Color.GREEN);
         ll.addView(mPlayButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         setContentView(ll);
+//        mSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+//            {
+//                seekBar.setMax(mPlayer.getDuration() / 1000);
+//                mTextView.setText(progress + "/" + seekBar.getMax());
+//
+//                if(fromUser)
+//                {
+//                    mPlayer.seekTo(progress*1000);
+//                }
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
+    }
+    public void cropAudio(){
+//        // read the file into an AudioSamples object
+//        AudioSamples as = new AudioSamples(new File("originalFile.mp3"),"",false);
+//
+//// get the audio from 15 to 30 seconds
+//        double[][] samples = as.getSamplesChannelSegregated(15.0, 30.0);
+//
+//// discard the rest of the samples
+//        as.setSamples(samples);
+//
+//// write the samples to a .wav file
+//        as.saveAudio(new File("newAudioFileName.wav"), true, AudioFileFormat.Type.WAVE, false);
     }
 
     /**

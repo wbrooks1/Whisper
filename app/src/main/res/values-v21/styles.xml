@@ -6,4 +6,14 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+    <!-- Styles for UW Buttons -->
+    <style name="uw_button">
+        <item name="android:background">@drawable/play_button_shape</item>
+        <item name="android:textColor">@color/uw_button_colors</item>
+    </style>
+    <!-- Styles for UW Buttons -->
+    <style name="uw_clear_button">
+        <item name="android:background">@drawable/play_button_shape</item>
+        <item name="android:textColor">@color/uw_clear_button_colors</item>
+    </style>
 </resources>
