@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,8 +83,8 @@ public class FileFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //TODO: get real username.
-            String user = "user";
+
+            String user = SignInActivity.getUserName();
             String url = FILE_URL + user;
             DownloadCoursesTask task = new DownloadCoursesTask();
             task.execute(new String[]{url});
@@ -96,7 +97,6 @@ public class FileFragment extends Fragment {
         super.onResume();
         if (mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
-            getActivity().recreate();
         }
     }
 
@@ -178,6 +178,7 @@ public class FileFragment extends Fragment {
             List<AudioFile> fileList = new ArrayList<AudioFile>();
             result = AudioFile.parseFileJSON(result, fileList);
             Log.i("FileFragment", fileList.toString());
+//            Log.i("User", SignInActivity.getUserName());
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)

@@ -59,6 +59,15 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
 
     }
 
+//    /**
+//     *
+//     */
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        recreate();
+//    }
+
     /**
      * Opens Listen Fragment for selected file.
      * @param item
@@ -83,8 +92,8 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
      */
     @Override
     public void onDeleteInteraction(AudioFile item) {
-        //TODO: Get real username
-        String user = "user";
+
+        String user = SignInActivity.getUserName();
         String url = DELETE_FILE_URL + "fileName=" + item.getFileName() + "&user=" + user;
         Log.i("delete url", url);
         DeleteFileTask task = new DeleteFileTask();
