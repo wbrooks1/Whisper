@@ -33,14 +33,14 @@
         android:onClick="toRecordActivity"
         android:id="@+id/to_record_button" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Record Text"
-        android:onClick="toTextActivity"
-        android:id="@+id/to_text_button"
-        app:layout_anchorGravity="center_vertical|left"
-        android:layout_gravity="bottom|center_horizontal" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Record Text"-->
+        <!--android:onClick="toTextActivity"-->
+        <!--android:id="@+id/to_text_button"-->
+        <!--app:layout_anchorGravity="center_vertical|left"-->
+        <!--android:layout_gravity="bottom|center_horizontal" />-->
 
 
 

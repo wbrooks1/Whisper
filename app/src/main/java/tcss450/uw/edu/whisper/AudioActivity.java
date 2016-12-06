@@ -3,6 +3,8 @@ package tcss450.uw.edu.whisper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.audiofx.Equalizer;
+import android.media.audiofx.Visualizer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.content.FileProvider;
@@ -69,6 +71,7 @@ public class AudioActivity extends AppCompatActivity {
     private MediaPlayer mPlayer;
     private SeekBar mSeek;
     private TextView mTextView;
+    private Visualizer mVisualizer;
 
 
     /**
@@ -94,6 +97,8 @@ public class AudioActivity extends AppCompatActivity {
         mRecorder.setOutputFile(mFilePath);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
+//        mRecorder.getAudioSessionID();
+//        mVisualizer = new Visualizer();
         try {
             mRecorder.prepare();
         } catch (IOException e) {
@@ -198,6 +203,9 @@ public class AudioActivity extends AppCompatActivity {
      */
     private void startPlaying() {
         mPlayer = new MediaPlayer();
+        Equalizer mEqualizer = new Equalizer(0, mPlayer.getAudioSessionId());
+        mEqualizer.setEnabled(true); // need to enable equalizer
+
         try {
             mPlayer.setDataSource(mFilePath);
             Log.e(LOG_TAG, mFilePath);
