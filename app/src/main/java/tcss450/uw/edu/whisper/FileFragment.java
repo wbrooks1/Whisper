@@ -97,7 +97,7 @@ public class FileFragment extends Fragment {
         super.onResume();
         if (mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
-            
+            getActivity().recreate();
         }
     }
 
@@ -175,18 +175,15 @@ public class FileFragment extends Fragment {
                         .show();
                 return;
             }
-
             List<AudioFile> fileList = new ArrayList<AudioFile>();
             result = AudioFile.parseFileJSON(result, fileList);
             Log.i("FileFragment", fileList.toString());
-//            Log.i("User", SignInActivity.getUserName());
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
                         .show();
                 return;
             }
-
             // Everything is good, show the list of courses.
             if (!fileList.isEmpty()) {
                 Log.i("FileFragment", mListener.toString());
