@@ -398,7 +398,7 @@ public class AudioActivity extends AppCompatActivity {
             sb.append("&fileDesc=");
             sb.append(URLEncoder.encode(mFileDescription, "UTF-8"));
             sb.append("&content=");
-            String content = CONTENT_URL + mFileName + ".3gp";
+            String content = CONTENT_URL + mFileName + userName + ".3gp";
             sb.append(URLEncoder.encode(content, "UTF-8"));
             sb.append("&user=");
             sb.append(URLEncoder.encode(userName, "UTF-8"));

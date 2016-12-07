@@ -68,10 +68,12 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             // Set article based on argument passed in
             Log.i("ListenFragment", "args not null" + args.toString());
             mFileName = getFileName((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
-        }
+            mFilePath =  getContent((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
 
-        String user = SignInActivity.getUserName();
-        mFilePath = URL + mFileName + user + ".3gp";
+        }
+//        String user = SignInActivity.getUserName();
+//        mFilePath = URL + mFileName + user + ".3gp";
+//        mFilePath =  getContent((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
         Log.i("LF onCreateView", mFilePath);
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -127,6 +129,20 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         Log.i("LF getFileName", file.getFileName());
         if (file != null) {
             return file.getFileName();
+        } else {
+            return  null;
+        }
+    }
+
+    /**
+     * Retrieve file name from audio file.
+     * @param file audio file
+     * @return name
+     */
+    public String getContent(AudioFile file) {
+        Log.i("LF getContent", file.getContent());
+        if (file != null) {
+            return file.getContent();
         } else {
             return  null;
         }

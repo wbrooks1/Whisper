@@ -39,6 +39,7 @@ public class FileFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private DeleteFileInteractionListener mDeleteListener;
+    private EditFileInteractionListener mEditListener;
 
     public final static String FILE_ITEM_SELECTED = "file_selected";
 
@@ -108,6 +109,8 @@ public class FileFragment extends Fragment {
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
             mDeleteListener = (DeleteFileInteractionListener) context;
+            mEditListener = (EditFileInteractionListener) context;
+
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -127,8 +130,18 @@ public class FileFragment extends Fragment {
         void onListFragmentInteraction(AudioFile item);
     }
 
+    /**
+     * Delete item interaction interface implemented by WebServiceActivity.
+     */
     public interface DeleteFileInteractionListener {
         void onDeleteInteraction(AudioFile item);
+    }
+
+    /**
+     * Edit item interaction interface implemented by WebServiceActivity.
+     */
+    public interface EditFileInteractionListener {
+        void onEditInteraction(AudioFile item);
     }
 
     /**
@@ -190,7 +203,7 @@ public class FileFragment extends Fragment {
             if (!fileList.isEmpty()) {
                 Log.i("FileFragment", mListener.toString());
 
-                mRecyclerView.setAdapter(new MyFileRecyclerViewAdapter(fileList, mListener, mDeleteListener));
+                mRecyclerView.setAdapter(new MyFileRecyclerViewAdapter(fileList, mListener, mDeleteListener, mEditListener));
             }
         }
     }
