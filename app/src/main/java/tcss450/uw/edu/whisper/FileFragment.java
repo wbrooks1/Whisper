@@ -170,6 +170,8 @@ public class FileFragment extends Fragment {
          */
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
+            Log.i("FileFragment result", result);
+
             if (result.startsWith("Unable to")) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
                         .show();

@@ -47,7 +47,7 @@ public class AudioFile implements Serializable {
 
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
-                    Log.i("AudioFile", obj.toString());
+                    //Log.i("AudioFile", obj.toString());
                     AudioFile file = new AudioFile(obj.getString(AudioFile.FILE_NAME), obj.getString(AudioFile.DESC)
                             , obj.getString(AudioFile.CONTENT));
                     audioFileList.add(file);
