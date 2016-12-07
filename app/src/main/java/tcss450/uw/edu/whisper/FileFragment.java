@@ -98,6 +98,7 @@ public class FileFragment extends Fragment {
         super.onResume();
         if (mRecyclerView.getAdapter() != null) {
             mRecyclerView.getAdapter().notifyDataSetChanged();
+            getActivity().recreate();
         }
     }
 
