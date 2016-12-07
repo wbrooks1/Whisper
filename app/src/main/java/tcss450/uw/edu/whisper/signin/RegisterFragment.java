@@ -73,7 +73,7 @@ public class RegisterFragment extends Fragment {
                 String confirmPwd = confirmationPwd.getText().toString();
                 if(TextUtils.isEmpty(userId)) {
                     Toast.makeText(v.getContext(), "Enter User ID"
-                                    , Toast.LENGTH_SHORT).show();
+                                    , Toast.LENGTH_LONG).show();
                     userIdText.requestFocus();
                     return;
                 }
@@ -85,7 +85,7 @@ public class RegisterFragment extends Fragment {
                 }
                 if(pwd.length() < 4) {
                     Toast.makeText(v.getContext(), "Password must be atleast 4 characters"
-                            , Toast.LENGTH_SHORT).show();
+                            , Toast.LENGTH_LONG).show();
                     pwdText.requestFocus();
                     return;
                 }
@@ -96,7 +96,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
                 if(!pwd.contentEquals(confirmPwd)) {
-                    Toast.makeText(v.getContext(), "Passwords to not match"
+                    Toast.makeText(v.getContext(), "Passwords do not match"
                             , Toast.LENGTH_SHORT).show();
                     pwdText.requestFocus();
                     confirmationPwd.setText("");
