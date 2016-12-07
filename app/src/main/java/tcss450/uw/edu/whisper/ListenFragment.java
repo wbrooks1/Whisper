@@ -6,7 +6,10 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import tcss450.uw.edu.whisper.file.AudioFile;
@@ -39,12 +45,13 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
     private MediaPlayer mMediaPlayer;
     private SeekBar mSeek;
     private TextView mTextView;
+    private FragmentManager mFragmentManager;
+
 
 
 
     public ListenFragment() {
         // Required empty public constructor
-
     }
 
     /**
@@ -183,16 +190,18 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         mMediaPlayer.release();
         mMediaPlayer = null;
     }
-    //TODO: make work or delete
+
+    /**
+     * Shares url for audio file.
+     */
     public void shareFile() {
-        Uri uri = Uri.parse(mFilePath);
-        Log.i("Share uri", uri.toString());
+        Log.i("Share uri", mFilePath);
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("audio/*");
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//        shareIntent.setType("audio/*");
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mFilePath);
         startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.app_name)));
+        mFragmentManager = getFragmentManager();
+        mFragmentManager.popBackStack();
     }
 }
