@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#b0f7f6</color>
+    <color name="colorPrimary">#ed286d</color>
     <color name="colorPrimaryDark">#528281</color>
-    <color name="colorAccent">#defaf9</color>
+    <color name="colorAccent">#c9b460</color>
     <color name="uwPurple">#4b2e83</color>
     <color name="uwGold">#e8e3d3</color>
     <color name="uwMetalicGold">#85754d</color>
