@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -46,6 +47,7 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
     private SeekBar mSeek;
     private TextView mTextView;
     private FragmentManager mFragmentManager;
+    private Handler handler;
 
 
 
@@ -75,6 +77,8 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             Log.i("ListenFragment", "args not null" + args.toString());
             mFileName = getFileName((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
         }
+        //The handler
+        handler = new Handler();
 
         String user = SignInActivity.getUserName();
         mFilePath = URL + mFileName + user + ".3gp";
@@ -90,6 +94,11 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "file not found", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
+//        int mediaPos = mMediaPlayer.getCurrentPosition();
+//        int mediaMax = mMediaPlayer.getDuration();
+//        mSeek.setMax(mediaMax);
+        handler.removeCallbacks(moveSeekBarThread);
+        handler.postDelayed(moveSeekBarThread, 100);
 
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
@@ -105,7 +114,9 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
                         TimeUnit.MILLISECONDS.toSeconds(duration) -
                                 TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
                 );
+
                 mAudioDurationTextView.setText(durationString);
+
 
                 player.start();
             }
@@ -115,12 +126,13 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
-                seekBar.setMax(mMediaPlayer.getDuration() / 1000);
-                mTextView.setText(progress + "/" + seekBar.getMax());
+//                seekBar.setMax(mMediaPlayer.getDuration());
+//                mTextView.setText(progress + "/" + seekBar.getMax());
 
                 if(fromUser)
                 {
-                    mMediaPlayer.seekTo(progress*1000);
+                        mMediaPlayer.seekTo(progress);
+                        seekBar.setProgress(progress);
                 }
             }
 
@@ -146,6 +158,22 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
 
         return view;
     }
+    private Runnable moveSeekBarThread = new Runnable() {
+
+        public void run() {
+            if (mMediaPlayer.isPlaying()) {
+
+                int mediaPos_new = mMediaPlayer.getCurrentPosition();
+                int mediaMax_new = mMediaPlayer.getDuration();
+                mSeek.setMax(mediaMax_new);
+                mSeek.setProgress(mediaPos_new);
+
+                handler.postDelayed(this, 100); // Looping the thread after 0.1
+                // second
+                // seconds
+            }
+        }
+    };
 
     /**
      * Retrieve file name from audio file.

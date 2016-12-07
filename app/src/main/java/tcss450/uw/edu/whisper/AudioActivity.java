@@ -59,7 +59,7 @@ public class AudioActivity extends AppCompatActivity {
             = "http://cssgate.insttech.washington.edu/~_450team4/uploadFile.php?";
     private final static String CONTENT_URL
             = "http://cssgate.insttech.washington.edu/~_450team4/uploads/";
-    private static final float VISUALIZER_HEIGHT_DIP = 50f;
+//    private static final float VISUALIZER_HEIGHT_DIP = 50f;
 
     private static final String LOG_TAG = "AudioActivity";
     private static String mFilePath = null;
@@ -71,7 +71,7 @@ public class AudioActivity extends AppCompatActivity {
     private PlayButton mPlayButton = null;
     private MediaRecorder mRecorder = null;
     private MediaPlayer mPlayer;
-    private VisualizerView mVisualizerView;
+//    private VisualizerView mVisualizerView;
 
 
 
@@ -217,7 +217,7 @@ public class AudioActivity extends AppCompatActivity {
     private void onPlay(boolean start) {
         if (start) {
             startPlaying();
-            audioVisualizerSetup();
+//            audioVisualizerSetup();
         } else {
             stopPlaying();
         }
@@ -228,8 +228,8 @@ public class AudioActivity extends AppCompatActivity {
      */
     private void startPlaying() {
         mPlayer = new MediaPlayer();
-        Equalizer mEqualizer = new Equalizer(0, mPlayer.getAudioSessionId());
-        mEqualizer.setEnabled(true); // need to enable equalizer
+//        Equalizer mEqualizer = new Equalizer(0, mPlayer.getAudioSessionId());
+//        mEqualizer.setEnabled(true); // need to enable equalizer
 
         try {
             mPlayer.setDataSource(mFilePath);
@@ -256,14 +256,14 @@ public class AudioActivity extends AppCompatActivity {
         mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
         mFilePath += "/audiorecordtest.3gp";
     }
-/**
-      * Audio Visualizer links to the VisualizerView Class
-      */
-        public void audioVisualizerSetup(){
-                mVisualizerView = new VisualizerView(this);
-                mVisualizerView.link(mPlayer);
-               setContentView(mVisualizerView);
-            }
+///**
+//      * Audio Visualizer links to the VisualizerView Class
+//      */
+//        public void audioVisualizerSetup(){
+//                mVisualizerView = new VisualizerView(this);
+//                mVisualizerView.link(mPlayer);
+//                setContentView(mVisualizerView);
+//            }
     /**
      * Creates the layout and buttons being drawn on the device screen.
      *
@@ -324,10 +324,8 @@ public class AudioActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        if (isFinishing() && mRecorder != null || mPlayer != null) {
-            mRecorder.release();
-            mVisualizerView.release();
-            mRecorder = null;
+        if (mPlayer != null) {
+
             mPlayer.release();
             mPlayer = null;
         }

@@ -31,9 +31,6 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     testCompile 'junit:junit:4.12'
-<<<<<<< HEAD
-=======
     testCompile 'org.json:json:20140107'
     compile files('libs/commons-net-3.5.jar')
->>>>>>> f9d39811aecd969854d3924b631c80158994ba7b
 }
