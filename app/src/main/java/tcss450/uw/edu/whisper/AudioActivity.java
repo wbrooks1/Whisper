@@ -177,21 +177,21 @@ public class AudioActivity extends AppCompatActivity {
     }
 
     /**
-     * @author William Almond
-     *         Creates custom Play button with a listener.
+     * @author Winfield Brooks
+     *         Creates custom Share button with a listener.
      */
     class ShareButton extends Button {
 
         OnClickListener clicker = new OnClickListener() {
             public void onClick(View v) {
-                if (mFilePath != null) {
+                if (mFileName != null) {
                     shareFile();
                 }
             }
         };
 
         /**
-         * Class contructor for PlayButton
+         * Class contructor for ShareButton
          *
          * @param ctx Context is the parent of Activity and View.
          */
