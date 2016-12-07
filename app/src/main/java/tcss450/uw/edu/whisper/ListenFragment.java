@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import tcss450.uw.edu.whisper.file.AudioFile;
+import tcss450.uw.edu.whisper.signin.SignInActivity;
 
 
 /**
@@ -62,8 +63,8 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             Log.i("ListenFragment", "args not null" + args.toString());
             mFileName = getFileName((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
         }
-        //TODO: get real username
-        String user = "user";
+
+        String user = SignInActivity.getUserName();
         mFilePath = URL + mFileName + user + ".3gp";
         Log.i("LF onCreateView", mFilePath);
         mMediaPlayer = new MediaPlayer();

@@ -37,6 +37,8 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import tcss450.uw.edu.whisper.signin.SignInActivity;
+
 /**
  * @author William Almond
  * Modified by Winfield Brooks
@@ -47,6 +49,7 @@ public class AudioActivity extends AppCompatActivity {
 
     private final static String FILE_UPLOAD_URL
             = "http://cssgate.insttech.washington.edu/~_450team4/saveFile.php?";
+
     private final static String BYTE_UPLOAD_URL
             = "http://cssgate.insttech.washington.edu/~_450team4/uploadFile.php?";
     private final static String CONTENT_URL
@@ -384,8 +387,8 @@ public class AudioActivity extends AppCompatActivity {
      * @return
      */
     private String buildFileUploadURL() {
-        //TODO: get actual username.
-        String userName = "user";
+
+        String userName = SignInActivity.getUserName();
         View v = this.findViewById(android.R.id.content);
         StringBuilder sb = new StringBuilder(FILE_UPLOAD_URL);
 
@@ -511,8 +514,8 @@ public class AudioActivity extends AppCompatActivity {
          */
         @Override
         protected String doInBackground(String... params) {
-            //TODO: get real userName
-            String userName = "user";
+
+            String userName = SignInActivity.getUserName();
             String fileName = mFileName + userName + ".3gp";
             HttpURLConnection conn = null;
             DataOutputStream dos = null;

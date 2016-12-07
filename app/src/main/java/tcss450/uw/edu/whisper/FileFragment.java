@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tcss450.uw.edu.whisper.file.AudioFile;
+import tcss450.uw.edu.whisper.signin.SignInActivity;
 
 /**
  * @author Winfield Brooks
@@ -81,8 +83,8 @@ public class FileFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //TODO: get real username.
-            String user = "user";
+
+            String user = SignInActivity.getUserName();
             String url = FILE_URL + user;
             DownloadCoursesTask task = new DownloadCoursesTask();
             task.execute(new String[]{url});
@@ -173,7 +175,6 @@ public class FileFragment extends Fragment {
                         .show();
                 return;
             }
-
             List<AudioFile> fileList = new ArrayList<AudioFile>();
             result = AudioFile.parseFileJSON(result, fileList);
             Log.i("FileFragment", fileList.toString());
@@ -183,7 +184,6 @@ public class FileFragment extends Fragment {
                         .show();
                 return;
             }
-
             // Everything is good, show the list of courses.
             if (!fileList.isEmpty()) {
                 Log.i("FileFragment", mListener.toString());

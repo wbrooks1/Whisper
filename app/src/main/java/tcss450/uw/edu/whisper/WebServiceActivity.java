@@ -83,8 +83,9 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
      */
     @Override
     public void onDeleteInteraction(AudioFile item) {
-        //TODO: Get real username
-        String user = "user";
+
+        String user = SignInActivity.getUserName();
+        Log.i("onDelete user:", user);
         String url = DELETE_FILE_URL + "fileName=" + item.getFileName() + "&user=" + user;
         Log.i("delete url", url);
         DeleteFileTask task = new DeleteFileTask();
