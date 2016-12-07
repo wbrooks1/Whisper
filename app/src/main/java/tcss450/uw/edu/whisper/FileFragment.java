@@ -39,6 +39,7 @@ public class FileFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private DeleteFileInteractionListener mDeleteListener;
+    private EditFileInteractionListener mEditListener;
 
     public final static String FILE_ITEM_SELECTED = "file_selected";
 
@@ -107,6 +108,8 @@ public class FileFragment extends Fragment {
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
             mDeleteListener = (DeleteFileInteractionListener) context;
+            mEditListener = (EditFileInteractionListener) context;
+
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -126,8 +129,18 @@ public class FileFragment extends Fragment {
         void onListFragmentInteraction(AudioFile item);
     }
 
+    /**
+     * Delete item interaction interface implemented by WebServiceActivity.
+     */
     public interface DeleteFileInteractionListener {
         void onDeleteInteraction(AudioFile item);
+    }
+
+    /**
+     * Edit item interaction interface implemented by WebServiceActivity.
+     */
+    public interface EditFileInteractionListener {
+        void onEditInteraction(AudioFile item);
     }
 
     /**
@@ -169,12 +182,13 @@ public class FileFragment extends Fragment {
          */
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL.
+            Log.i("FileFragment result", result);
+
             if (result.startsWith("Unable to")) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
                         .show();
                 return;
             }
-
             List<AudioFile> fileList = new ArrayList<AudioFile>();
             result = AudioFile.parseFileJSON(result, fileList);
             Log.i("FileFragment", fileList.toString());
@@ -185,12 +199,11 @@ public class FileFragment extends Fragment {
                         .show();
                 return;
             }
-
             // Everything is good, show the list of courses.
             if (!fileList.isEmpty()) {
                 Log.i("FileFragment", mListener.toString());
 
-                mRecyclerView.setAdapter(new MyFileRecyclerViewAdapter(fileList, mListener, mDeleteListener));
+                mRecyclerView.setAdapter(new MyFileRecyclerViewAdapter(fileList, mListener, mDeleteListener, mEditListener));
             }
         }
     }

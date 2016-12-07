@@ -6,7 +6,10 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import tcss450.uw.edu.whisper.file.AudioFile;
@@ -36,12 +42,12 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
     private TextView mAudioDurationTextView;
     public final static String FILE_ITEM_SELECTED = "file_selected";
     private MediaPlayer mMediaPlayer;
+    private FragmentManager mFragmentManager;
 
 
 
     public ListenFragment() {
         // Required empty public constructor
-
     }
 
     /**
@@ -62,10 +68,12 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             // Set article based on argument passed in
             Log.i("ListenFragment", "args not null" + args.toString());
             mFileName = getFileName((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
-        }
+            mFilePath =  getContent((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
 
-        String user = SignInActivity.getUserName();
-        mFilePath = URL + mFileName + user + ".3gp";
+        }
+//        String user = SignInActivity.getUserName();
+//        mFilePath = URL + mFileName + user + ".3gp";
+//        mFilePath =  getContent((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
         Log.i("LF onCreateView", mFilePath);
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -126,6 +134,20 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Retrieve file name from audio file.
+     * @param file audio file
+     * @return name
+     */
+    public String getContent(AudioFile file) {
+        Log.i("LF getContent", file.getContent());
+        if (file != null) {
+            return file.getContent();
+        } else {
+            return  null;
+        }
+    }
+
 
     /**
      * On click actions for play and pause button.
@@ -155,16 +177,18 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
         mMediaPlayer.release();
         mMediaPlayer = null;
     }
-    //TODO: make work or delete
+
+    /**
+     * Shares url for audio file.
+     */
     public void shareFile() {
-        Uri uri = Uri.parse(mFilePath);
-        Log.i("Share uri", uri.toString());
+        Log.i("Share uri", mFilePath);
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.setType("audio/*");
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-//        shareIntent.setType("audio/*");
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mFilePath);
         startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.app_name)));
+        mFragmentManager = getFragmentManager();
+        mFragmentManager.popBackStack();
     }
 }

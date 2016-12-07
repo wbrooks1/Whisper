@@ -26,16 +26,18 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
     private final List<AudioFile> mValues;
     private final OnListFragmentInteractionListener mListener;
     private final FileFragment.DeleteFileInteractionListener mDeleteListener;
+    private final FileFragment.EditFileInteractionListener mEditListener;
 
     /**
      * Class constructor.
      * @param items a list of audio files.
      * @param listener the list fragment listener.
      */
-    public MyFileRecyclerViewAdapter(List<AudioFile> items, OnListFragmentInteractionListener listener, FileFragment.DeleteFileInteractionListener delete) {
+    public MyFileRecyclerViewAdapter(List<AudioFile> items, OnListFragmentInteractionListener listener, FileFragment.DeleteFileInteractionListener delete, FileFragment.EditFileInteractionListener edit) {
         mValues = items;
         mListener = listener;
         mDeleteListener = delete;
+        mEditListener = edit;
     }
 
     /**
@@ -69,6 +71,14 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
                 }
             }
         });
+        holder.mEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mEditListener) {
+                    mEditListener.onEditInteraction(holder.mItem);
+                }
+            }
+        });
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +109,7 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
         public final ImageView mThumbnailView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final ImageButton mEditButton;
         public final ImageButton mDeleteButton;
         public AudioFile mItem;
 
@@ -108,6 +119,7 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
             mThumbnailView = (ImageView) view.findViewById(R.id.thumbnail);
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            mEditButton = (ImageButton) view.findViewById(R.id.edit_button);
             mDeleteButton = (ImageButton) view.findViewById(R.id.delete_button);
         }
 

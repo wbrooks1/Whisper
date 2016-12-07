@@ -9,28 +9,40 @@
 
         <ImageView
             android:id="@+id/thumbnail"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".1"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/thumbnail"/>
 
         <TextView
             android:id="@+id/id"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
             android:id="@+id/content"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight=".55"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="0dp"
+            android:layout_weight=".15"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@android:drawable/ic_menu_edit" />
+
+        <ImageButton
             android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".15"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:src="@android:drawable/ic_delete" />

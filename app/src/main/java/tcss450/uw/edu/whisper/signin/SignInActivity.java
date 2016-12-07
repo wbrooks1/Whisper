@@ -31,7 +31,7 @@ import tcss450.uw.edu.whisper.WebServiceActivity;
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,  RegisterFragment.AddUserListener, LoginFragment.loginListener {
 
     /** helps allow app to remember who was loggin in */
-    private SharedPreferences mSharedPreferences;
+    private static SharedPreferences mSharedPreferences;
 
     private  ArrayList<String> mUserList;
 
@@ -68,6 +68,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         mSharedPreferences
                 .edit()
                 .putBoolean(getString(R.string.LOGGEDIN), true)
+                .putString("UserName", userId)
                 .commit();
 
         Intent i = new Intent(this, WebServiceActivity.class);
@@ -81,7 +82,8 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
      * @return the username of the person logged in
      */
     public static String getUserName() {
-        return LoginFragment.userId;
+        return mSharedPreferences.getString("UserName", null);
+        //return LoginFragment.userId;
     }
 
 
