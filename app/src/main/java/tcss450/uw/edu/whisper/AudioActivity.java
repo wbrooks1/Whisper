@@ -174,6 +174,32 @@ public class AudioActivity extends AppCompatActivity {
     }
 
     /**
+     * @author William Almond
+     *         Creates custom Play button with a listener.
+     */
+    class ShareButton extends Button {
+
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                if (mFilePath != null) {
+                    shareFile();
+                }
+            }
+        };
+
+        /**
+         * Class contructor for PlayButton
+         *
+         * @param ctx Context is the parent of Activity and View.
+         */
+        public ShareButton(Context ctx) {
+            super(ctx);
+            setText("Share Audio");
+            setOnClickListener(clicker);
+        }
+    }
+
+    /**
      * Switch that calls start and stop playing.
      *
      * @param start boolean true indicating start, false indicating stop.
@@ -241,6 +267,12 @@ public class AudioActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
+        ShareButton shareButton = new ShareButton(this);
+        ll.addView(shareButton,
+                new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        0));
         setContentView(ll);
     }
 
@@ -274,7 +306,7 @@ public class AudioActivity extends AppCompatActivity {
         return mFilePath;
     }
 
-    public void shareFile(View view) {
+    public void shareFile() {
        // Uri uri = FileProvider.getUriForFile(getApplicationContext(), FILES_AUTHORITY, mFilePath)
         Uri uri = Uri.fromFile(new File(mFilePath));
         Intent shareIntent = new Intent();
