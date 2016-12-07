@@ -388,7 +388,7 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
                     }
 
                 } catch (Exception e) {
-                    response = "Unable to upload file, Reason: "
+                    response = "Unable to edit file, Reason: "
                             + e.getMessage();
                 } finally {
                     if (urlConnection != null)
@@ -413,11 +413,11 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
                 JSONObject jsonObject = new JSONObject(result);
                 String status = (String) jsonObject.get("result");
                 if (status.equals("success")) {
-                    Toast.makeText(getApplicationContext(), "File successfully deleted!"
+                    Toast.makeText(getApplicationContext(), "File successfully edited!"
                             , Toast.LENGTH_LONG)
                             .show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to delete: "
+                    Toast.makeText(getApplicationContext(), "Failed to edit: "
                                     + jsonObject.get("error")
                             , Toast.LENGTH_LONG)
                             .show();
