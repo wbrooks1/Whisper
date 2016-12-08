@@ -254,7 +254,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
             mUserList = new ArrayList<String>();
             result = LoginFragment.parseUserJSON(result, mUserList);
 
-            System.out.print(mUserList.get(0));
+//            System.out.print(mUserList.get(0));
             Log.v("user LIst", mUserList.get(0));
 
 
