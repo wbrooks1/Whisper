@@ -83,7 +83,6 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getContext(), "file not found", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
             /**
@@ -104,7 +103,6 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             }
 
         });
-
         mFileNameTextView.setText(mFileName);
         ImageButton playButton = (ImageButton) view.findViewById(R.id.media_play);
         ImageButton pauseButton = (ImageButton) view.findViewById(R.id.media_pause);

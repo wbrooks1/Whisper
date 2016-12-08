@@ -68,4 +68,3 @@ WARNING:
             Settings-->Apps-->Whisper-->Permissions: then switch on Microphone and Storage.
     3) If the device has a weak internet connection the file list can take a second or three...maybe ten to load.
     4) The app will crash if you use the "Start Recording" button from the listening screen.
-    5) We see strange behavior when navigating back to the main file list from the recording screen if the file list is scrolled.
