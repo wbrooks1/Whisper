@@ -94,56 +94,13 @@ public class LoginFragmentTest {
                                 .getDecorView()))))
                 .check(matches(isDisplayed()));
 
-        //logout
-//        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
-//        onView(withText("LOGOUT")).perform(click());
+
 
     }
 
-    @Test
-    public void testLoginInvalidPassword() {
-
-        String userName = "user";
-        String pwd = "wrongpwd";
-
-        //enter data
-        onView(withId(R.id.userid_edit))
-                .perform(typeText(userName));
-        onView(withId(R.id.pwd_edit))
-                .perform(typeText(pwd));
-
-        //login
-        onView(withId(R.id.login_button))
-                .perform(click());
-
-        //test toast
-        onView(withText("Incorrect Password"))
-                .inRoot(withDecorView(not(is(
-                        mActivityRule.getActivity()
-                                .getWindow()
-                                .getDecorView()))))
-                .check(matches(isDisplayed()));
-
-    }
-
-    @Test
-    public void testLoginEmptyUserName() {
+//
 
 
-
-        //login
-        onView(withId(R.id.login_button))
-                .perform(click());
-
-        //test toast
-        onView(withText("Enter User ID"))
-                .inRoot(withDecorView(not(is(
-                        mActivityRule.getActivity()
-                                .getWindow()
-                                .getDecorView()))))
-                .check(matches(isDisplayed()));
-
-    }
 
     @Test
     public void testLoginEmptyPwd() {

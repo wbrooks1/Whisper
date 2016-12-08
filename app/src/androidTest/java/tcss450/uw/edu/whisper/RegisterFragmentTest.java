@@ -78,28 +78,7 @@ public class RegisterFragmentTest {
 
     }
 
-    @Test
-    public void testRegisterInvalidUsername() {
 
-        //get to registration page
-        onView(withId(R.id.new_user)).perform(click());
-
-        //click register button
-        onView(withId(R.id.register_button)).perform(click());
-
-
-        //test the toast
-        onView(withText("Enter User ID"))
-                .inRoot(withDecorView(not(is(
-                        mActivityRule.getActivity()
-                                .getWindow()
-                                .getDecorView()))))
-                .check(
-                        matches(
-                                isDisplayed()));
-
-
-    }
 
     @Test
     public void testRegistrationInvalidPassword() {
@@ -139,41 +118,7 @@ public class RegisterFragmentTest {
     }
 
 
-    @Test
-    public void testRegistrationInvalidConformationPwd() {
 
-        Random rand = new Random();
-
-        //generate username
-        String userName = "test" + (rand.nextInt(10) + 1 ) + (rand.nextInt(10) + 1 )
-                + (rand.nextInt(10) + 1 ) + (rand.nextInt(10) + 1 );
-
-        String password = "";
-        for (int i = 0; i < rand.nextInt(5) + 5; i++) {
-            password += rand.nextInt(10);
-        }
-
-
-        //get to registration page
-        onView(withId(R.id.new_user)).perform(click());
-
-        //enter data
-        onView(withId(R.id.user_name)).perform(typeText(userName));
-        onView(withId(R.id.password)).perform(typeText(password));
-        //onView(withId(R.id.reenter_password)).perform(typeText(password));
-
-        //click register button
-        onView(withId(R.id.register_button)).perform(click());
-
-
-        //test the toast
-        onView(withText("Enter confirmation password"))
-                .inRoot(withDecorView(not(is(
-                        mActivityRule.getActivity()
-                                .getWindow()
-                                .getDecorView())))).check(matches(isDisplayed()));
-
-    }
 
 
     @Test
