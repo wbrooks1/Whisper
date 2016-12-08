@@ -96,7 +96,7 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
                 if(!pwd.contentEquals(confirmPwd)) {
-                    Toast.makeText(v.getContext(), "Passwords to not match"
+                    Toast.makeText(v.getContext(), "Passwords do not match"
                             , Toast.LENGTH_SHORT).show();
                     pwdText.requestFocus();
                     confirmationPwd.setText("");

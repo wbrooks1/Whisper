@@ -44,8 +44,9 @@ public class LoginFragment extends Fragment {
     /** the listener for logging in */
     public loginListener mListener;
 
-
+    /** holds the user password */
     protected static String pwd;
+    /** holds the users user name */
     protected static String userId;
 
     /**
