@@ -133,35 +133,4 @@ public class MyFileRecyclerViewAdapter extends RecyclerView.Adapter<MyFileRecycl
             return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
-
-//    /**
-//     * Deletes file from database.
-//     * @param view
-//     */
-//    public void deleteFile(View view) {
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Are you sure you to delete file: " + (mValues.get(position).getFileName());
-//
-//        Context context = builder.getContext();
-//        LinearLayout layout = new LinearLayout(context);
-//        layout.setOrientation(LinearLayout.VERTICAL);
-//
-//        builder.setView(layout);
-//        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//
-//            }
-//        });
-//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//        builder.show();
-//
-//    }
 }

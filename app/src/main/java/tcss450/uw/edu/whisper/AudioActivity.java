@@ -258,14 +258,12 @@ public class AudioActivity extends AppCompatActivity {
 
         LinearLayout ll = new LinearLayout(this);
         mRecordButton = new RecordButton(this);
-//        mRecordButton.setBackgroundColor(Color.BLUE);
         ll.addView(mRecordButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         mPlayButton = new PlayButton(this);
-//        mPlayButton.setBackgroundColor();
         ll.addView(mPlayButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,

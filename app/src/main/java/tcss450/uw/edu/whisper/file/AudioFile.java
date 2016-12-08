@@ -59,27 +59,50 @@ public class AudioFile implements Serializable {
         return reason;
     }
 
-
+    /**
+     * Get file name.
+     * @return file name
+     */
     public String getFileName() {
         return mFileName;
     }
 
+    /**
+     * Get file description.
+     * @return file description
+     */
     public String getDesc() {
         return mDesc;
     }
 
+    /**
+     * Get file content.
+     * @return file content
+     */
     public String  getContent() {
         return mContent;
     }
 
+    /**
+     * Set file name.
+     * @param  new file name
+     */
     public void setFileName(String mFileName) {
         this.mFileName = mFileName;
     }
 
+    /**
+     * Set file description.
+     * @param  new file name
+     */
     public void setDesc(String mDesc) {
         this.mDesc = mDesc;
     }
 
+    /**
+     * Set file content.
+     * @param new file content
+     */
     public void setContent(String mContent) {
         this.mContent = mContent;
     }

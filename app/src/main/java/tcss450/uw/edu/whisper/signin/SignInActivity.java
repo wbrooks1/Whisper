@@ -32,7 +32,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
     /** helps allow app to remember who was loggin in */
     private static SharedPreferences mSharedPreferences;
-
+    /** holds the list of users */
     private  ArrayList<String> mUserList;
 
     /**
@@ -102,6 +102,10 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
     }
 
+    /**
+     * logs the user into the app
+     * @param url the url that contains the user login info
+     */
     @Override
     public void loginListener(String url) {
         LoginTask task = new LoginTask();
@@ -173,17 +177,17 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                 String status = (String) jsonObject.get("result");
                 if (status.equals("success")) {
                     Toast.makeText(getApplicationContext(), "User successfully registered!"
-                            , Toast.LENGTH_LONG)
+                            , Toast.LENGTH_SHORT)
                             .show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Failed to register: "
                                     + jsonObject.get("error")
-                            , Toast.LENGTH_LONG)
+                            , Toast.LENGTH_SHORT)
                             .show();
                 }
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "Something wrong with the data" +
-                        e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -264,12 +268,12 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                     login(user, pwd);
                     Toast.makeText(getApplicationContext(), "Logged In", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
                 }
 
 
             } else {
-                Toast.makeText(getApplicationContext(), "Incorrect User Name", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Incorrect User Name", Toast.LENGTH_LONG).show();
             }
 
 

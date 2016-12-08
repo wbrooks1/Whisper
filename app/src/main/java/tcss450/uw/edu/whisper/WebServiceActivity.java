@@ -69,15 +69,6 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
 
     }
 
-//    /**
-//     *
-//     */
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        recreate();
-//    }
-
     /**
      * Opens Listen Fragment for selected file.
      * @param item

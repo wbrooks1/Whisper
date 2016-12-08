@@ -217,7 +217,6 @@ public class FileFragment extends Fragment {
             List<AudioFile> fileList = new ArrayList<AudioFile>();
             result = AudioFile.parseFileJSON(result, fileList);
             Log.i("FileFragment", fileList.toString());
-//            Log.i("User", SignInActivity.getUserName());
             // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
