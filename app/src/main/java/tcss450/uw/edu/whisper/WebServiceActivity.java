@@ -264,7 +264,7 @@ public class WebServiceActivity extends AppCompatActivity implements FileFragmen
     /**
      * async task for using web services for deleting file info
      */
-    private class DeleteFileTask extends AsyncTask<String, Void, String> {
+    public class DeleteFileTask extends AsyncTask<String, Void, String> {
 
 
         /**
