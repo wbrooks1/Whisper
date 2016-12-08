@@ -122,10 +122,10 @@ public class AudioActivity extends AppCompatActivity {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
                     setText("Stop recording");
-                    mRecordButton.setBackgroundColor(Color.RED);
+//                    mRecordButton.setBackgroundColor(Color.RED);
                 } else {
                     setText("Start recording");
-                    mRecordButton.setBackgroundColor(Color.BLUE);
+//                    mRecordButton.setBackgroundColor(Color.BLUE);
                 }
                 mStartRecording = !mStartRecording;
             }
@@ -155,10 +155,10 @@ public class AudioActivity extends AppCompatActivity {
                 onPlay(mStartPlaying);
                 if (mStartPlaying) {
                     setText("Stop playing");
-                    mRecordButton.setBackgroundColor(Color.RED);
+//                    mRecordButton.setBackgroundColor(Color.RED);
                 } else {
                     setText("Start playing");
-                    mRecordButton.setBackgroundColor(Color.GREEN);
+//                    mRecordButton.setBackgroundColor(Color.GREEN);
                 }
                 mStartPlaying = !mStartPlaying;
             }
@@ -258,14 +258,14 @@ public class AudioActivity extends AppCompatActivity {
 
         LinearLayout ll = new LinearLayout(this);
         mRecordButton = new RecordButton(this);
-        mRecordButton.setBackgroundColor(Color.BLUE);
+//        mRecordButton.setBackgroundColor(Color.BLUE);
         ll.addView(mRecordButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         0));
         mPlayButton = new PlayButton(this);
-        mPlayButton.setBackgroundColor(Color.GREEN);
+//        mPlayButton.setBackgroundColor();
         ll.addView(mPlayButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,

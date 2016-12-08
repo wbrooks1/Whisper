@@ -51,6 +51,11 @@ public class FileFragment extends Fragment {
     public FileFragment() {
     }
 
+    /**
+     *
+     * @param columnCount
+     * @return
+     */
     @SuppressWarnings("unused")
     public static FileFragment newInstance(int columnCount) {
         FileFragment fragment = new FileFragment();
@@ -60,6 +65,10 @@ public class FileFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +78,13 @@ public class FileFragment extends Fragment {
         }
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,6 +109,9 @@ public class FileFragment extends Fragment {
         return view;
     }
 
+    /**
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -101,7 +120,10 @@ public class FileFragment extends Fragment {
         }
     }
 
-
+    /**
+     *
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -116,6 +138,9 @@ public class FileFragment extends Fragment {
         }
     }
 
+    /**
+     *
+     */
     @Override
     public void onDetach() {
         super.onDetach();
