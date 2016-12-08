@@ -71,9 +71,6 @@ public class ListenFragment extends Fragment implements View.OnClickListener {
             mFilePath =  getContent((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
 
         }
-//        String user = SignInActivity.getUserName();
-//        mFilePath = URL + mFileName + user + ".3gp";
-//        mFilePath =  getContent((AudioFile) args.getSerializable(FILE_ITEM_SELECTED));
         Log.i("LF onCreateView", mFilePath);
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
